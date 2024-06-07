@@ -9,7 +9,7 @@ const moduleVersion = process.env.MODULE_VERSION;
 const githubProject = process.env.GH_PROJECT;
 const githubTag = process.env.GH_TAG;
 const foundryPath = process.env.FOUNDRY_PATH;
-const kindOfProject = process.env.KIND_OF_PROJECT || "module";
+const kindOfProject = process.env.KIND_OF_PROJECT || "system";
 
 console.log(process.env.VSCODE_INJECTION);
 

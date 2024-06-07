@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/foundryvtt-manifest.json",
-  "id": "dumb-module",
-  "title": "Typescript Template Module",
+  "id": "cowboy-bebop",
+  "title": "Cowboy Bebop System",
   "description": "A template module using Typescript. You should change name, title, and description in module.json.",
   "version": "1.0.0",
   "packs": [],
