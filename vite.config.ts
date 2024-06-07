@@ -2,10 +2,14 @@ import * as fsPromises from "fs/promises";
 import copy from "rollup-plugin-copy";
 import scss from "rollup-plugin-scss";
 import { defineConfig, Plugin } from "vite";
+import path from "path";
+import fs from "fs-extra";
 
 const moduleVersion = process.env.MODULE_VERSION;
 const githubProject = process.env.GH_PROJECT;
 const githubTag = process.env.GH_TAG;
+const foundryPath = process.env.FOUNDRY_PATH;
+const kindOfProject = process.env.KIND_OF_PROJECT || "module";
 
 console.log(process.env.VSCODE_INJECTION);
 
@@ -22,7 +26,10 @@ export default defineConfig({
     },
   },
   plugins: [
-    updateModuleManifestPlugin(),
+    copy({
+      targets: [{ src: "src/*.json", dest: "dist" }],
+    }),
+    updateModuleManifestPlugin(kindOfProject),
     scss({
       output: "dist/style.css",
       sourceMap: true,
@@ -35,10 +42,11 @@ export default defineConfig({
       ],
       hook: "writeBundle",
     }),
+    conditionalCopyPlugin(kindOfProject),
   ],
 });
 
-function updateModuleManifestPlugin(): Plugin {
+function updateModuleManifestPlugin(kind: string = "module"): Plugin {
   return {
     name: "update-module-manifest",
     async writeBundle(): Promise<void> {
@@ -47,7 +55,7 @@ function updateModuleManifestPlugin(): Plugin {
       ) as Record<string, unknown>;
       const version = moduleVersion || (packageContents.version as string);
       const manifestContents: string = await fsPromises.readFile(
-        "src/module.json",
+        `src/${kind}.json`,
         "utf-8"
       );
       const manifestJson = JSON.parse(manifestContents) as Record<
@@ -57,17 +65,60 @@ function updateModuleManifestPlugin(): Plugin {
       manifestJson["version"] = version;
       if (githubProject) {
         const baseUrl = `https://github.com/${githubProject}/releases`;
-        manifestJson["manifest"] = `${baseUrl}/latest/download/module.json`;
+        manifestJson["manifest"] = `${baseUrl}/latest/download/${kind}.json`;
         if (githubTag) {
           manifestJson[
             "download"
-          ] = `${baseUrl}/download/${githubTag}/module.zip`;
+          ] = `${baseUrl}/download/${githubTag}/${kind}.zip`;
         }
       }
       await fsPromises.writeFile(
-        "dist/module.json",
+        `dist/${kind}.json`,
         JSON.stringify(manifestJson, null, 4)
       );
+    },
+  };
+}
+
+function conditionalCopyPlugin(kind: string = "module"): Plugin {
+  return {
+    name: "conditional-copy-plugin",
+    async writeBundle(): Promise<void> {
+      if (!foundryPath) {
+        console.log(
+          "FOUNDRY_PATH is not defined -> Skip internal test release."
+        );
+        return;
+      }
+
+      const sourceFolder = path.resolve(__dirname, "dist");
+      const destinationFolder = path.join(foundryPath, `Data/${kind}s`);
+
+      try {
+        const manifestContents: string = await fsPromises.readFile(
+          `src/${kind}.json`,
+          "utf-8"
+        );
+        const manifestJson = JSON.parse(manifestContents) as Record<
+          string,
+          unknown
+        >;
+
+        const exists = await fs.pathExists(destinationFolder);
+        if (exists) {
+          await fs.copy(
+            sourceFolder,
+            path.join(destinationFolder, manifestJson["id"] as string)
+          );
+          console.log("Folder copied successfully.");
+        } else {
+          console.log(
+            `Destination folder does not exist: ${destinationFolder} -> Skip internal test release.`
+          );
+        }
+      } catch (err) {
+        console.error(err);
+      }
     },
   };
 }
