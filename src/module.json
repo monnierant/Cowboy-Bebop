@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/foundryvtt-manifest.json",
-  "id": "foundry-module-ts",
+  "id": "dumb-module",
   "title": "Typescript Template Module",
   "description": "A template module using Typescript. You should change name, title, and description in module.json.",
   "version": "1.0.0",
@@ -11,7 +11,7 @@
   "compatibility": {
     "minimum": "9",
     "verified": "10",
-    "maximum": "10"
+    "maximum": "12"
   },
   "languages": [
     {
