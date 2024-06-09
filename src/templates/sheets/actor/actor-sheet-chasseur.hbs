@@ -1,0 +1,78 @@
+<form class="actor-sheet {{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <img
+      src="{{actor.img}}"
+      data-edit="img"
+      title="{{actor.name}}"
+      height="64"
+      width="64"
+    />
+    <div>
+      <label>{{localize 'COWBOY.actor.name'}}</label>
+      <input
+        name="name"
+        type="text"
+        value="{{actor.name}}"
+      />
+      <label>{{localize 'COWBOY.actor.concept'}}</label>
+      <input
+        name="system.concept"
+        type="text"
+        value="{{actor.system.concept}}"
+      />
+    </div>
+    <div class="cowboy-health">
+      {{> "systems/cowboy-bebop/templates/partials/health-counter.hbs"}}
+
+    </div>
+    <div>
+      <label>{{localize 'COWBOY.actor.memory'}}</label>
+      <input
+        name="system.memory"
+        type="text"
+        value="{{actor.system.memory}}"
+      />
+    </div>
+
+  </header>
+
+  {{> "systems/cowboy-bebop/templates/partials/rythm-counter.hbs"}}
+
+  <section class="cowboy-actor-traits">
+    {{#each actor.system.traits as |trait id|}}
+      <h3>{{id}}</h3>
+      {{!-- {{actor.system.traits}}
+      
+      {{#each 0..2 as |index|}}
+        <input name="traits-{{id}}-{{index}}" type="text" value="" />
+      {{/each}} --}}
+    {{/each}}
+  </section>
+
+  <section class="items">
+    <h3 class="noborder">Owned Items</h3>
+    <ol class="actor-items">
+      {{#each actor.items as |item id|}}
+        <li class="actor-item" data-item-id="{{id}}">
+          <div class="item-name">
+            <img
+              src="{{item.img}}"
+              title="{{item.name}}"
+              width="24"
+              height="24"
+            />
+            <h4>{{item.name}}</h4>
+          </div>
+          <div class="item-controls">
+            <a class="item-control item-edit" title="Edit Item"><i
+                class="fas fa-edit"
+              ></i></a>
+            <a class="item-control item-delete" title="Delete Item"><i
+                class="fas fa-trash"
+              ></i></a>
+          </div>
+        </li>
+      {{/each}}
+    </ol>
+  </section>
+</form>

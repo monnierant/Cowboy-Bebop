@@ -1,4 +1,16 @@
 {
+  "COWBOY": {
+    "actor": {
+      "name": "NAME",
+      "concept": "CONCEPT",
+      "memory": "MEMORY",
+      "burden": "BURDEN"
+    },
+
+    "weapon-trait": "weapon trait",
+    "equipment-trait": "equipment trait"
+  },
+
   "MYMODULE.dog-browser": "Dog browser",
   "MYMODULE.dogs": "Dogs",
   "MYMODULE.fetch-random-dog": "Fetch random dog photo",

@@ -1,17 +1,47 @@
 // Do not remove this import. If you do Vite will think your styles are dead
 // code and not include them in the build output.
 import "../styles/style.scss";
-import DogBrowser from "./apps/dogBrowser";
+// import DogBrowser from "./apps/dogBrowser";
+import CowboyBebopItemSheet from "./apps/sheets/cowboybebopItemSheet";
+import CowboyBebopActorSheet from "./apps/sheets/cowboybebopActorSheet";
 import { moduleId } from "./constants";
 import { MyModule } from "./types";
 
 let module: MyModule;
 
+async function preloadTemplates(): Promise<any> {
+  const templatePaths = [
+    `systems/${moduleId}/templates/partials/rythm-counter.hbs`,
+    `systems/${moduleId}/templates/partials/health-counter.hbs`,
+  ];
+
+  return loadTemplates(templatePaths);
+}
+
 Hooks.once("init", () => {
   console.log(`Initializing ${moduleId}`);
 
-  module = (game as Game).modules.get(moduleId) as MyModule;
-  module.dogBrowser = new DogBrowser();
+  Handlebars.registerHelper(
+    "range",
+    function (start: number, end: number, context: any, options: any) {
+      let result = "";
+      for (let i = start; i <= end; i++) {
+        result += options.fn({ ...context, index: i });
+      }
+      return result;
+    }
+  );
+
+  // module = (game as Game).modules.get(moduleId) as MyModule;
+  // module.dogBrowser = new DogBrowser();
+
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet(moduleId, CowboyBebopItemSheet, { makeDefault: true });
+
+  Actors.unregisterSheet("core", ActorSheet);
+  Actors.registerSheet(moduleId, CowboyBebopActorSheet, { makeDefault: true });
+
+  preloadTemplates();
 });
 
 Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {

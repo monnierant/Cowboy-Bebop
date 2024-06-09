@@ -13,9 +13,10 @@ const kindOfProject = process.env.KIND_OF_PROJECT || "system";
 
 console.log(process.env.VSCODE_INJECTION);
 
+const newLocal = "writeBundle";
 export default defineConfig({
   build: {
-    sourcemap: true,
+    // sourcemap: true,
     rollupOptions: {
       input: "src/ts/module.ts",
       output: {
@@ -32,7 +33,7 @@ export default defineConfig({
     updateModuleManifestPlugin(kindOfProject),
     scss({
       output: "dist/style.css",
-      sourceMap: true,
+      // sourceMap: true,
       watch: ["src/styles/*.scss"],
     }),
     copy({
@@ -40,7 +41,7 @@ export default defineConfig({
         { src: "src/languages", dest: "dist" },
         { src: "src/templates", dest: "dist" },
       ],
-      hook: "writeBundle",
+      // hook: newLocal,
     }),
     conditionalCopyPlugin(kindOfProject),
   ],

@@ -1,0 +1,32 @@
+<div class="cowboy-health-counter">
+  {{log actor.system}}
+  <div class="cowboy-cylinder">
+    {{#range 1 6 actor}}
+      <div class="cowboy-slot">
+        {{log index}}
+        {{log system}}
+        {{#if (gt index system.cartridge)}}
+          <input type="checkbox" disabled="true" checked id="slot{{index}}" />
+        {{else}}
+          <input type="checkbox" disabled="true" id="slot{{index}}" />
+        {{/if}}
+      </div>
+    {{/range}}
+  </div>
+  <div class="cowboy-health-action">
+    {{#if (gt actor.system.cartridge 0)}}
+      <button
+        class="cowboy-health-action-button"
+        type="button"
+        data-value="-1"
+      >Damage</button>
+    {{/if}}
+    {{#if (and isGM (lt actor.system.cartridge 6))}}
+      <button
+        class="cowboy-health-action-button"
+        type="button"
+        data-value="1"
+      >Heal</button>
+    {{/if}}
+  </div>
+</div>

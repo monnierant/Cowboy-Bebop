@@ -1,0 +1,60 @@
+{
+  "Actor": {
+    "types": ["chasseur", "prime"],
+    "templates": {
+      "common": {
+        "groove": "",
+        "concept": ""
+      }
+    },
+    "chasseur": {
+      "templates": ["common"],
+      "memory": "",
+      "traits": {
+        "rock": [
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 }
+        ],
+        "blues": [
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 }
+        ],
+        "jazz": [
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 }
+        ],
+        "dance": [
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 }
+        ],
+        "tango": [
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 },
+          { "name": "", "damaged": 0 }
+        ]
+      },
+      "cartridge": 6,
+      "rythme": 0,
+      "burden": [],
+      "ship": {
+        "main": "",
+        "mono": []
+      }
+    },
+    "prime": {
+      "templates": ["common"]
+    }
+  },
+  "Item": {
+    "types": ["mono"],
+    "mono": {
+      "weapon-trait": "",
+      "equipment-trait": "",
+      "health": 1
+    }
+  }
+}

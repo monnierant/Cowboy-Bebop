@@ -1,0 +1,57 @@
+.cowboy-cylinder {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cowboy-slot {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cowboy-slot input {
+  width: 20px;
+  height: 20px;
+}
+
+.cowboy-slot:nth-child(6) {
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cowboy-slot:nth-child(1) {
+  top: 31%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+}
+.cowboy-slot:nth-child(3) {
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cowboy-slot:nth-child(4) {
+  top: 69%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+.cowboy-slot:nth-child(5) {
+  top: 31%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+}
+.cowboy-slot:nth-child(2) {
+  top: 69%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+}

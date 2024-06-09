@@ -1,0 +1,18 @@
+{
+  "COWBOY": {
+    "actor": {
+      "name": "NOM",
+      "concept": "CONCEPT",
+      "memory": "SOUVENIR",
+      "burden": "FARDEAU"
+    },
+
+    "weapon-trait": "Traits d'armes",
+    "equipment-trait": "Traits d'équipement"
+  },
+
+  "MYMODULE.dog-browser": "Chien browser",
+  "MYMODULE.dogs": "Chiens",
+  "MYMODULE.fetch-random-dog": "Fetch random Chien photo",
+  "MYMODULE.random-dog-alt": "Image of a random Chien"
+}
