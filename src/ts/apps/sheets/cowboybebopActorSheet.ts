@@ -1,5 +1,5 @@
 import { moduleId } from "../../constants";
-import { Traits, Trait } from "../../types";
+// import { Traits, Trait } from "../../types";
 import CowboyBebopActor from "../documents/cowboybebopActor";
 
 export default class CowboyBebopItemSheet extends ActorSheet {
@@ -19,6 +19,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   override activateListeners(html: JQuery) {
     super.activateListeners(html);
     // Roll handlers, click handlers, etc. would go here.
+    html.find(".cowboy-actor-roll").on("click", this._onRollDice.bind(this));
 
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
@@ -43,6 +44,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   // Handle damage
   private async _onDamage(event: Event) {
     event.preventDefault();
+    event.stopPropagation();
     const points = parseInt(
       (event.target as HTMLElement).getAttribute("data-value") || "0"
     );
@@ -54,7 +56,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   // Rename Trait
   private async _onRenameTrait(event: Event) {
     event.preventDefault();
-    console.log("Trait renamed");
+    event.stopPropagation();
     // Recup all the data from the event
     const name = (event.target as HTMLInputElement).value;
     const traitId = parseInt(
@@ -76,7 +78,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   // Damaged Trait
   private async _onDamageTrait(event: Event) {
     event.preventDefault();
-    console.log("Trait damaged");
+    event.stopPropagation();
     // Recup all the data from the event
     const isDamaged = (event.target as HTMLInputElement).checked;
     const traitId = parseInt(
@@ -93,5 +95,20 @@ export default class CowboyBebopItemSheet extends ActorSheet {
       traitId,
       isDamaged
     );
+  }
+
+  // Roll Dice
+  private async _onRollDice(event: Event) {
+    console.log("Rolling dice");
+    event.preventDefault();
+    event.stopPropagation();
+    // Recup all the data from the event
+    const traitCategoryId = (event.target as HTMLElement).dataset.category;
+
+    // Check if the data is valid
+    if (traitCategoryId === undefined) return;
+
+    // Save the new data
+    await (this.actor as CowboyBebopActor).prepareDicePool(traitCategoryId);
   }
 }

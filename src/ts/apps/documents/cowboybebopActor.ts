@@ -1,6 +1,27 @@
 import { Trait, Traits } from "../../types";
+import CowboyBebopRollDialog from "../dialog/cowboybebopRollDialog";
 
 export default class CowboyBebopActor extends Actor {
+  // ========================================
+  // Update
+  // ========================================
+  // Dice Pool
+  public prepareDicePool(category: string) {
+    // Get the traits
+    const traits = (this as any).system.traits[category];
+    // Get the dice pool
+    const dicePool = traits
+      .filter((trait: Trait) => !trait.damaged)
+      .filter((trait: Trait) => trait.name != "")
+      .map((trait: Trait) => trait.name);
+
+    console.log(dicePool);
+    console.log("Roll");
+    const dialog = new CowboyBebopRollDialog("rock", category, this, dicePool);
+
+    dialog.render(true);
+  }
+
   // ========================================
   // Update
   // ========================================
