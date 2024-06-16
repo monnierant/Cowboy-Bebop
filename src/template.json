@@ -12,29 +12,29 @@
       "memory": "",
       "traits": {
         "rock": [
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 }
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false }
         ],
         "blues": [
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 }
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false }
         ],
         "jazz": [
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 }
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false }
         ],
         "dance": [
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 }
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false }
         ],
         "tango": [
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 },
-          { "name": "", "damaged": 0 }
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false },
+          { "name": "", "damaged": false }
         ]
       },
       "cartridge": 6,
