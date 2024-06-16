@@ -99,12 +99,23 @@ export default class CowboyBebopRollDialog extends Dialog {
     let roll = new Roll(`${diceOptions.nb}d6${diceOptions.advantage}`);
     const result = await roll.roll();
 
-    console.log(traitsUsed);
-    console.log(roll);
+    console.log(result);
 
-    // const content = await result.render({
-    //   template: `systems/${moduleId}/templates/chat/roll-troubleshoot.hbs`,
-    // });
+    const dices = result.terms
+      .map((e: any) => e.results)
+      .flat()
+      .filter((e: any) => e.active);
+    console.log("let's go", dices);
+
+    const carton: number =
+      (result.total >= mouvement.difficulty ? 1 : 0) +
+      (dices.filter((e: any) => e.result === 6).length > 0 ? 1 : 0);
+
+    const notes: number =
+      dices.filter((e: any) => e.result === 1).length > 0
+        ? dices.filter((e: any) => e.result === 1).length
+        : mouvement.notes;
+
     const content = await renderTemplate(
       `systems/${moduleId}/templates/chat/roll.hbs`,
       {
@@ -117,6 +128,8 @@ export default class CowboyBebopRollDialog extends Dialog {
         bonus: bonus,
         traitsUsed: traitsUsed.map((trait) => trait.dataset.dice),
         result: result,
+        carton: carton,
+        notes: notes,
       }
     );
 

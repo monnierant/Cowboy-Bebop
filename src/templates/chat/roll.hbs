@@ -36,6 +36,13 @@
       </section>
     </div>
 
-    <h4 class="dice-total">{{ dice.result }}</h4>
+    <h4 class="dice-total">
+      {{#range 1 carton mouvement}}
+      <i class="fa-solid fa-music cowboy-carton"></i>
+      {{/range}}
+      {{#range 1 notes mouvement}}
+      <i class="fa-solid fa-record-vinyl cowboy-note"></i>
+      {{/range}}
+    </h4>
   </div>
 </div>

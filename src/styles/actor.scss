@@ -1,5 +1,18 @@
 @import "./actor/health-counter.scss";
 
+.cowboy-carton {
+  color: #18520b;
+  background-color: #7ca9719a;
+  padding: 0.3rem;
+  border-radius: 50%;
+}
+.cowboy-note {
+  color: #aa0200;
+  background-color: #d98887bb;
+  padding: 0.3rem;
+  border-radius: 50%;
+}
+
 .dice-tooltip .part-total.success {
   color: #18520b;
   background-color: #7ca9719a;
