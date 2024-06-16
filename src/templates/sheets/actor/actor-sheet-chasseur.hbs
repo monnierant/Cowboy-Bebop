@@ -36,6 +36,11 @@
     {{#each actor.system.traits as |traitCategory traitCategoryId|}}
     <div class="cowboy-actor-trait-cat-header">
       <h3>{{ traitCategoryId }}</h3>
+      <h3>
+        <a class="cowboy-actor-roll" data-category="{{ traitCategoryId }}">
+          <i class="fa-solid fa-dice"></i>
+        </a>
+      </h3>
     </div>
     <div class="cowboy-actor-trait-cat">
       {{#each traitCategory as |trait traitId|}}

@@ -4,6 +4,7 @@ import "../styles/style.scss";
 // import DogBrowser from "./apps/dogBrowser";
 import CowboyBebopItemSheet from "./apps/sheets/cowboybebopItemSheet";
 import CowboyBebopActorSheet from "./apps/sheets/cowboybebopActorSheet";
+import CowboyBebopActor from "./apps/documents/cowboybebopActor";
 import { moduleId } from "./constants";
 import { MyModule } from "./types";
 
@@ -32,8 +33,7 @@ Hooks.once("init", () => {
     }
   );
 
-  // module = (game as Game).modules.get(moduleId) as MyModule;
-  // module.dogBrowser = new DogBrowser();
+  CONFIG.Actor.documentClass = CowboyBebopActor;
 
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet(moduleId, CowboyBebopItemSheet, { makeDefault: true });

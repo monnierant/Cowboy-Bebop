@@ -1,5 +1,6 @@
 import { moduleId } from "../../constants";
 import { Traits, Trait } from "../../types";
+import CowboyBebopActor from "../documents/cowboybebopActor";
 
 export default class CowboyBebopItemSheet extends ActorSheet {
   // Define the template to use for this sheet
@@ -65,14 +66,11 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     if (traitCategoryId === undefined || traitId === undefined) return;
 
     // Save the new data
-    await this.actor.update({
-      "system.traits": this.renameTraitImut(
-        (this.actor as any).system.traits,
-        traitCategoryId,
-        traitId,
-        name
-      ),
-    });
+    await (this.actor as CowboyBebopActor).renameTrait(
+      traitCategoryId,
+      traitId,
+      name
+    );
   }
 
   // Damaged Trait
@@ -90,54 +88,10 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     if (traitCategoryId === undefined || traitId === undefined) return;
 
     // Save the new data
-    await this.actor.update({
-      "system.traits": this.damageTraitImut(
-        (this.actor as any).system.traits,
-        traitCategoryId,
-        traitId,
-        isDamaged
-      ),
-    });
-  }
-
-  // ========================================
-  // Helpers
-  // ========================================
-  private renameTraitImut(
-    traits: Traits,
-    category: string,
-    index: number,
-    newName: string
-  ): Traits {
-    if (traits[category] && traits[category][index]) {
-      return {
-        ...traits,
-        [category]: traits[category].map((trait: Trait, i: number) =>
-          i === index ? { ...trait, name: newName } : trait
-        ),
-      };
-    } else {
-      console.error("Trait or category not found");
-      return traits;
-    }
-  }
-
-  private damageTraitImut(
-    traits: Traits,
-    category: string,
-    index: number,
-    newDamaged: boolean
-  ): Traits {
-    if (traits[category] && traits[category][index]) {
-      return {
-        ...traits,
-        [category]: traits[category].map((trait: Trait, i: number) =>
-          i === index ? { ...trait, damaged: newDamaged } : trait
-        ),
-      };
-    } else {
-      console.error("Trait or category not found");
-      return traits;
-    }
+    await (this.actor as CowboyBebopActor).damageTrait(
+      traitCategoryId,
+      traitId,
+      isDamaged
+    );
   }
 }
