@@ -78,9 +78,8 @@ export default class CowboyBebopRollDialog extends Dialog {
   // Roll the dice
   private async _onRoll(html: JQuery) {
     // Roll the dice
-    console.log("Roll");
     const rang = parseInt(html.find(".cowboy-dialog-rang").val() as string);
-    const difficulty = rangs[rang ?? 0];
+    const mouvement = rangs[rang ?? 0];
     const advantage =
       parseInt(
         html.find(".cowboy-dialog-modifier-advantage").val() as string
@@ -93,26 +92,37 @@ export default class CowboyBebopRollDialog extends Dialog {
     const advantageInstruction = ["dh", "", "dl"];
 
     const diceOptions = {
-      nb:
-        rangs[rang ?? 0].dices +
-        traitsUsed.length +
-        Math.abs(advantage) +
-        bonus,
+      nb: mouvement.dices + traitsUsed.length + Math.abs(advantage) + bonus,
       advantage: advantageInstruction[advantage + 1],
     };
 
-    console.log(html.find(".cowboy-dialog-modifier-advantage").val());
-    console.log(advantage);
-    console.log(traitsUsed);
-    console.log(difficulty);
-    console.log(diceOptions);
+    let roll = new Roll(`${diceOptions.nb}d6${diceOptions.advantage}`);
+    const result = await roll.roll();
 
-    let roll = new Roll(diceOptions.nb + "d6" + diceOptions.advantage);
-    const result = await roll.evaluate();
-    console.log(result);
+    console.log(traitsUsed);
+    console.log(roll);
+
+    // const content = await result.render({
+    //   template: `systems/${moduleId}/templates/chat/roll-troubleshoot.hbs`,
+    // });
+    const content = await renderTemplate(
+      `systems/${moduleId}/templates/chat/roll.hbs`,
+      {
+        actor: this.actor,
+        genre: this.genre,
+        category: this.category,
+        rang: rang,
+        mouvement: mouvement,
+        advantage: advantage,
+        bonus: bonus,
+        traitsUsed: traitsUsed.map((trait) => trait.dataset.dice),
+        result: result,
+      }
+    );
+
     roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `Rolling ${this.category} dice pool`,
+      content: content,
     });
   }
 }

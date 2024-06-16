@@ -1,5 +1,10 @@
 @import "./actor/health-counter.scss";
 
+.dice-tooltip .part-total.success {
+  color: #18520b;
+  background-color: #7ca9719a;
+}
+
 .cowboy-health {
   display: flex;
   justify-content: space-evenly;
