@@ -60,7 +60,7 @@ export default class CowboyBebopActor extends Actor {
     );
 
     this.damageTrait(category, index, true);
-    this._rolls[rollId].actionRemoveNote();
+    this._rolls[rollId].actionRemoveNoteByTrait(traitToDamage);
     this.removeMessage(html, element);
   }
 

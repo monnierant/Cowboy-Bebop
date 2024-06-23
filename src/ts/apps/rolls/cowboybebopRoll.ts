@@ -115,6 +115,11 @@ export default class CowboyBebopRoll {
     this.toMessage();
   }
 
+  public async actionRemoveNoteByTrait(trait: string) {
+    this._traitsUsed = this._traitsUsed.filter((e) => e !== trait);
+    this.actionRemoveNote();
+  }
+
   public async collectAll() {
     this._carton = 0;
     this._notes = 0;
