@@ -39,6 +39,7 @@
       },
       "cartridge": 6,
       "rythme": 0,
+      "notes": 0,
       "burden": [],
       "ship": {
         "main": "",
@@ -46,6 +47,7 @@
       }
     },
     "prime": {
+      "cartons": 0,
       "templates": ["common"]
     }
   },

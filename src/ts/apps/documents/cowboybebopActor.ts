@@ -1,9 +1,77 @@
 import { Trait, Traits } from "../../types";
 import CowboyBebopRollDialog from "../dialog/cowboybebopRollDialog";
+import CowboyBebopRoll from "../rolls/cowboybebopRoll";
 
 export default class CowboyBebopActor extends Actor {
+  private _rolls: CowboyBebopRoll[] = [];
+
+  //=============================================================================
+  // PC
+  //=============================================================================
+
   // ========================================
-  // Update
+  // Roll
+  // ========================================
+  public async roll(
+    genre: string,
+    category: string,
+    rang: any,
+    mouvement: any,
+    advantage: number,
+    traitsUsed: any
+  ) {
+    const roll = new CowboyBebopRoll(
+      this._rolls.length,
+      this,
+      genre,
+      category,
+      rang,
+      mouvement,
+      advantage,
+      traitsUsed
+    );
+    this._rolls.push(roll);
+    await roll.roll();
+    await roll.toMessage();
+  }
+
+  // ========================================
+  // Actions
+  // ========================================
+  public async actionDamageCartridge(
+    html: JQuery,
+    element: HTMLInputElement,
+    rollId: number
+  ) {
+    await this.updateCartridge(-1);
+    this._rolls[rollId].actionRemoveNote();
+    this.removeMessage(html, element);
+  }
+
+  public async actionDamageTrait(
+    html: JQuery,
+    element: HTMLInputElement,
+    rollId: number,
+    category: string,
+    traitToDamage: string
+  ) {
+    const index = (this as any).system.traits[category].findIndex(
+      (trait: Trait) => trait.name === traitToDamage
+    );
+
+    this.damageTrait(category, index, true);
+    this._rolls[rollId].actionRemoveNote();
+    this.removeMessage(html, element);
+  }
+
+  public removeMessage(html: JQuery, element: HTMLInputElement) {
+    const parent = html.find(element).parents("li.chat-message");
+
+    parent.remove();
+  }
+
+  // ========================================
+  // Preparation
   // ========================================
   // Dice Pool
   public prepareDicePool(category: string) {
@@ -15,16 +83,23 @@ export default class CowboyBebopActor extends Actor {
       .filter((trait: Trait) => trait.name != "")
       .map((trait: Trait) => trait.name);
 
-    console.log(dicePool);
-    console.log("Roll");
     const dialog = new CowboyBebopRollDialog("rock", category, this, dicePool);
 
     dialog.render(true);
+    console.log("dialogOpened");
   }
 
   // ========================================
   // Update
   // ========================================
+  // Damage Cartridge
+  public async updateCartridge(points: number) {
+    // Save the new data
+    await this.update({
+      "system.cartridge": (this as any).system.cartridge + points,
+    });
+  }
+
   // Rename Trait
   public async renameTrait(category: string, index: number, newName: string) {
     // Save the new data
@@ -95,4 +170,8 @@ export default class CowboyBebopActor extends Actor {
       return traits;
     }
   }
+
+  //=============================================================================
+  // NPC
+  //=============================================================================
 }

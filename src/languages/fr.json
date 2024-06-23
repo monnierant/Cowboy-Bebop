@@ -6,6 +6,13 @@
       "memory": "SOUVENIR",
       "burden": "FARDEAU"
     },
+    "roll": {
+      "actions": {
+        "collect": "Collecter",
+        "cartridge": "Cartouche",
+        "show": "Montrer"
+      }
+    },
 
     "weapon-trait": "Traits d'armes",
     "equipment-trait": "Traits d'équipement"

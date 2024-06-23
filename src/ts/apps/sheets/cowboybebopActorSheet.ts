@@ -48,9 +48,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     const points = parseInt(
       (event.target as HTMLElement).getAttribute("data-value") || "0"
     );
-    await this.actor.update({
-      "system.cartridge": (this.actor as any).system.cartridge + points,
-    });
+    await (this.actor as CowboyBebopActor).updateCartridge(points);
   }
 
   // Rename Trait
@@ -101,7 +99,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   private async _onRollDice(event: Event) {
     console.log("Rolling dice");
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation();
     // Recup all the data from the event
     const traitCategoryId = (event.target as HTMLElement).dataset.category;
 

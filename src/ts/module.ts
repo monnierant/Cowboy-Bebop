@@ -54,3 +54,46 @@ Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {
   });
   html.find(".directory-header .action-buttons").append(button);
 });
+
+// Hooks.on("renderChatLog", (app: any, html: any, data: any): any => {
+//   documents.Item5e.chatListeners(html);
+//   documents.ChatMessage5e.onRenderChatLog(html);
+// });
+Hooks.on(
+  "renderChatMessage",
+  (app: Application, html: JQuery, data: any): void => {
+    console.log("renderChatMessageHook");
+    html.find(".cowboy-roll-action").on("click", (event: Event) => {
+      console.log("renderChatMessageHookClick");
+      console.log(event.currentTarget);
+      const datas = (event.currentTarget as HTMLElement).dataset;
+      const actor: CowboyBebopActor = (game as any).actors?.get(datas.actorId);
+      switch (datas.action) {
+        case "damage-cartridge":
+          actor?.actionDamageCartridge(
+            html,
+            event.currentTarget as HTMLInputElement,
+            parseInt(datas.rollid ?? "0")
+          );
+          break;
+        case "damage-trait":
+          actor?.actionDamageTrait(
+            html,
+            event.currentTarget as HTMLInputElement,
+            parseInt(datas.rollid ?? "0"),
+            datas.category ?? "",
+            datas.trait ?? ""
+          );
+
+          break;
+        case "collect":
+          //TODO: implement collect
+          console.log("collect TODO");
+          break;
+      }
+    });
+
+    if (!app) return;
+    if (!data) return;
+  }
+);

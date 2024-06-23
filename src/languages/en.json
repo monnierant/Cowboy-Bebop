@@ -7,6 +7,14 @@
       "burden": "BURDEN"
     },
 
+    "roll": {
+      "actions": {
+        "collect": "Collect",
+        "cartridge": "Use Cartridge",
+        "traits": "Use Traits"
+      }
+    },
+
     "weapon-trait": "weapon trait",
     "equipment-trait": "equipment trait"
   },

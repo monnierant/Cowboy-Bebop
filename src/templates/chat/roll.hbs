@@ -1,13 +1,13 @@
-<div class="dice-roll">
+<div class="dice-roll" data-rollid="{{ rollId }}">
   <div class="dice-result">
-    {{!--
-    <div class="dice-formula">5d6dl</div>
-    --}}
-    <div class="dice-tooltip expanded" style="display: block">
+    <div
+      class="cowboy-dice-tooltip dice-tooltip expanded"
+      style="display: block"
+    >
       <section class="tooltip-part">
         <div class="dice">
           <header class="part-header flexrow">
-            <span class="part-formula">{{ result.formula }}</span>
+            <span class="part-formula">{{ result.formula }} ({{ genre }})</span>
 
             <span
               class="part-total {{#if (gte result.total mouvement.difficulty)}}success{{/if}}"
@@ -36,7 +36,7 @@
       </section>
     </div>
 
-    <h4 class="dice-total">
+    <h4 class="dice-total" data-notes="{{ notes }}" data-carton="{{ carton }}">
       {{#range 1 carton mouvement}}
       <i class="fa-solid fa-music cowboy-carton"></i>
       {{/range}}
@@ -44,5 +44,58 @@
       <i class="fa-solid fa-record-vinyl cowboy-note"></i>
       {{/range}}
     </h4>
+    <section class="cowboy-roll-actions">
+      {{#if (gt notes 0)}}
+      {{#if (gt actor.system.cartridge 0)}}
+      <button
+        class="cowboy-roll-action cowboy-roll-action-notes"
+        type="button"
+        data-action="damage-cartridge"
+        data-rollid="{{ rollId }}"
+        data-actor-id="{{ actor.id }}"
+      >
+        <i class="fa-solid fa-user-injured"></i>
+        {{ localize "COWBOY.roll.actions.cartridge" }} ({{
+          actor.system.cartridge
+        }}/6)
+      </button>
+      {{/if}}
+      {{#if (gt traitsUsed.length 0)}}
+      <h4 class="cowboy-roll-action-notes">
+        <i class="fa-solid fa-user-tag"></i>
+        {{ localize "COWBOY.roll.actions.traits" }}
+      </h4>
+      <div class="cowboy-roll-traits cowboy-roll-action-notes">
+        {{#each traitsUsed as |trait|}}
+        <div class="cowboy-roll-trait">
+          <button
+            class="cowboy-roll-action"
+            type="button"
+            data-action="damage-trait"
+            data-rollid="{{ rollId }}"
+            data-actor-id="{{ actor.id }}"
+            data-trait="{{ trait }}"
+            data-category="{{ category }}"
+          >
+            <i class="fa-solid fa-user-tag"></i>
+          </button>
+          <div class="cowboy-roll-trait-name">{{ trait }}</div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
+      {{/if}}
+      {{#if (or (gt notes 0) (gt carton 0))}}
+      <button
+        class="cowboy-roll-action"
+        type="button"
+        data-action="collect"
+        data-rollid="{{ rollId }}"
+      >
+        <i class="fa-solid fa-plus"></i>
+        {{ localize "COWBOY.roll.actions.collect" }}
+      </button>
+      {{/if}}
+    </section>
   </div>
 </div>

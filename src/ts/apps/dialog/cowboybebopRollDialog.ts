@@ -1,5 +1,7 @@
 import CowboyBebopActor from "../documents/cowboybebopActor";
 import { moduleId, rangs } from "../../constants";
+import { Mouvement } from "../../types";
+import CowboyBebopRoll from "../rolls/cowboybebopRoll";
 
 export default class CowboyBebopRollDialog extends Dialog {
   // ========================================
@@ -54,6 +56,7 @@ export default class CowboyBebopRollDialog extends Dialog {
   public dicePool: string[];
   public genre: string;
   public category: string;
+  public roll: CowboyBebopRoll | undefined;
 
   // Define the template to use for this sheet
   override get template() {
@@ -79,7 +82,7 @@ export default class CowboyBebopRollDialog extends Dialog {
   private async _onRoll(html: JQuery) {
     // Roll the dice
     const rang = parseInt(html.find(".cowboy-dialog-rang").val() as string);
-    const mouvement = rangs[rang ?? 0];
+    const mouvement: Mouvement = rangs[rang ?? 0];
     const advantage =
       parseInt(
         html.find(".cowboy-dialog-modifier-advantage").val() as string
@@ -87,55 +90,14 @@ export default class CowboyBebopRollDialog extends Dialog {
     const traitsUsed = html
       .find(".cowboy-dialog-dice-pool > input[type='checkbox']:checked")
       .toArray();
-    const bonus = this.genre === this.category ? 1 : 0;
 
-    const advantageInstruction = ["dh", "", "dl"];
-
-    const diceOptions = {
-      nb: mouvement.dices + traitsUsed.length + Math.abs(advantage) + bonus,
-      advantage: advantageInstruction[advantage + 1],
-    };
-
-    let roll = new Roll(`${diceOptions.nb}d6${diceOptions.advantage}`);
-    const result = await roll.roll();
-
-    console.log(result);
-
-    const dices = result.terms
-      .map((e: any) => e.results)
-      .flat()
-      .filter((e: any) => e.active);
-    console.log("let's go", dices);
-
-    const carton: number =
-      (result.total >= mouvement.difficulty ? 1 : 0) +
-      (dices.filter((e: any) => e.result === 6).length > 0 ? 1 : 0);
-
-    const notes: number =
-      dices.filter((e: any) => e.result === 1).length > 0
-        ? dices.filter((e: any) => e.result === 1).length
-        : mouvement.notes;
-
-    const content = await renderTemplate(
-      `systems/${moduleId}/templates/chat/roll.hbs`,
-      {
-        actor: this.actor,
-        genre: this.genre,
-        category: this.category,
-        rang: rang,
-        mouvement: mouvement,
-        advantage: advantage,
-        bonus: bonus,
-        traitsUsed: traitsUsed.map((trait) => trait.dataset.dice),
-        result: result,
-        carton: carton,
-        notes: notes,
-      }
+    await this.actor.roll(
+      this.genre,
+      this.category,
+      rang,
+      mouvement,
+      advantage,
+      traitsUsed.map((trait) => trait.dataset.dice)
     );
-
-    roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: content,
-    });
   }
 }

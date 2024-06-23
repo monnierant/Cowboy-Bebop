@@ -13,3 +13,10 @@ export interface Trait {
 export interface Traits {
   [category: string]: Trait[];
 }
+
+export interface Mouvement {
+  name: string;
+  difficulty: number;
+  dices: number;
+  notes: number;
+}

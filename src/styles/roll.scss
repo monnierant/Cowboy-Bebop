@@ -1,0 +1,16 @@
+.dice-roll {
+  .cowboy-dice-tooltip {
+    display: block !important;
+  }
+
+  .cowboy-roll-trait {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: normal;
+    margin: 0.2em 0;
+    .cowboy-roll-action {
+      width: auto;
+    }
+  }
+}
