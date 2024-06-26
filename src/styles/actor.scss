@@ -1,5 +1,18 @@
 @import "./actor/health-counter.scss";
 
+.cowboy-admin-pannel {
+  display: flex;
+}
+
+.cowboy-actor-trait-name {
+  width: 100%;
+}
+
+.cowboy-actor-roll {
+  width: auto;
+  min-width: 7em;
+}
+
 .cowboy-carton {
   color: #18520b;
   background-color: #7ca9719a;
@@ -9,6 +22,12 @@
 .cowboy-note {
   color: #aa0200;
   background-color: #d98887bb;
+  padding: 0.3rem;
+  border-radius: 50%;
+}
+.cowboy-rythme {
+  color: #00aa85;
+  background-color: #92e8d5bb;
   padding: 0.3rem;
   border-radius: 50%;
 }
@@ -22,12 +41,30 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: 0;
+  margin: 0.5em;
 }
 
 .cowboy-actor-trait-cat-header {
   display: flex;
   margin: 0;
+}
+
+.cowboy-actor-counters {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.5em;
+
+  .cowboy-actor-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+
+    .cowboy-actor-counter-value {
+      margin-left: 0.5em;
+    }
+  }
 }
 
 .cowboy-actor-trait-cat {
@@ -41,5 +78,19 @@
     justify-content: center;
     align-items: center;
     margin: 0;
+  }
+
+  .cowboy-actor-trait-ishyperdamaged {
+    color: #aa0200;
+    background-color: #d98887bb;
+  }
+
+  .cowboy-actor-trait-isdamaged {
+    color: #7e5a00;
+    background-color: #fbcf61bb;
+  }
+
+  .cowboy-actor-trait-heal {
+    width: auto;
   }
 }

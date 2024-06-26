@@ -1,10 +1,16 @@
 {
   "COWBOY": {
     "actor": {
+      "roll": "Roll",
       "name": "NAME",
       "concept": "CONCEPT",
       "memory": "MEMORY",
-      "burden": "BURDEN"
+      "burden": "BURDEN",
+      "admin": {
+        "heal": "Heal",
+        "damage": "Damage",
+        "restore": "Restore"
+      }
     },
 
     "roll": {

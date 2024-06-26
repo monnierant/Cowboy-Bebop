@@ -1,10 +1,16 @@
 {
   "COWBOY": {
     "actor": {
+      "roll": "Lancer",
       "name": "NOM",
       "concept": "CONCEPT",
       "memory": "SOUVENIR",
-      "burden": "FARDEAU"
+      "burden": "FARDEAU",
+      "admin": {
+        "heal": "Soin",
+        "damage": "Dégat",
+        "restore": "Restore"
+      }
     },
     "roll": {
       "actions": {

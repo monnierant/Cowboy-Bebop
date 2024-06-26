@@ -3,14 +3,35 @@
     display: block !important;
   }
 
-  .cowboy-roll-trait {
+  .dice-total.cowboy-dice-super-success {
+    background-color: rgba(51, 193, 75, 0.2);
+  }
+
+  .cowboy-roll-traits {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: normal;
+    justify-content: space-evenly;
     margin: 0.2em 0;
-    .cowboy-roll-action {
+
+    .cowboy-roll-trait {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      padding: 5px;
       width: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      margin: 0.2em 0;
+      .cowboy-roll-trait-name {
+        width: auto;
+        margin-right: 0.5em;
+      }
+      .cowboy-roll-action {
+        width: auto;
+      }
     }
   }
 }

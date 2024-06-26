@@ -25,7 +25,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     if (!this.options.editable) return;
 
     html
-      .find(".cowboy-health-action-button")
+      .find(".cowboy-admin-action-health")
       .on("click", this._onDamage.bind(this));
 
     html
@@ -35,6 +35,10 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     html
       .find(".cowboy-actor-trait-damaged")
       .on("change", this._onDamageTrait.bind(this));
+
+    html
+      .find(".cowboy-admin-action-restore")
+      .on("click", this._onRestore.bind(this));
   }
 
   // ========================================
@@ -49,6 +53,13 @@ export default class CowboyBebopItemSheet extends ActorSheet {
       (event.target as HTMLElement).getAttribute("data-value") || "0"
     );
     await (this.actor as CowboyBebopActor).updateCartridge(points);
+  }
+
+  // Restore Traits
+  private async _onRestore(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    await (this.actor as CowboyBebopActor).restoreTraits();
   }
 
   // Rename Trait
@@ -74,7 +85,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
   }
 
   // Damaged Trait
-  private async _onDamageTrait(event: Event) {
+  private async _onDamageTrait(event: Event, hyperDamaged: boolean = false) {
     event.preventDefault();
     event.stopPropagation();
     // Recup all the data from the event
@@ -91,7 +102,8 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     await (this.actor as CowboyBebopActor).damageTrait(
       traitCategoryId,
       traitId,
-      isDamaged
+      isDamaged,
+      hyperDamaged
     );
   }
 

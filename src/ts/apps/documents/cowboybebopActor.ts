@@ -1,3 +1,4 @@
+import { genres } from "../../constants";
 import { Trait, Traits } from "../../types";
 import CowboyBebopRollDialog from "../dialog/cowboybebopRollDialog";
 import CowboyBebopRoll from "../rolls/cowboybebopRoll";
@@ -38,6 +39,13 @@ export default class CowboyBebopActor extends Actor {
   // ========================================
   // Actions
   // ========================================
+
+  public async restoreTraits() {
+    await this.update({
+      "system.traits": this.restoreTraitImut((this as any).system.traits),
+    });
+  }
+
   public async actionDamageCartridge(
     html: JQuery,
     element: HTMLInputElement,
@@ -59,8 +67,30 @@ export default class CowboyBebopActor extends Actor {
       (trait: Trait) => trait.name === traitToDamage
     );
 
-    this.damageTrait(category, index, true);
+    this.damageTrait(category, index, true, false);
     this._rolls[rollId].actionRemoveNoteByTrait(traitToDamage);
+    this.removeMessage(html, element);
+  }
+
+  public async actionHyperDamageTrait(
+    html: JQuery,
+    element: HTMLInputElement,
+    rollId: number,
+    category: string,
+    traitToDamage: string
+  ) {
+    const index = (this as any).system.traits[category].findIndex(
+      (trait: Trait) => trait.name === traitToDamage
+    );
+
+    await this._rolls[rollId].reRoll(traitToDamage);
+    this.damageTrait(
+      category,
+      index,
+      true,
+      this._rolls[rollId].getCarton() < 2
+    );
+    this._rolls[rollId].toMessage();
     this.removeMessage(html, element);
   }
 
@@ -117,7 +147,8 @@ export default class CowboyBebopActor extends Actor {
   public async damageTrait(
     category: string,
     index: number,
-    newDamaged: boolean
+    newDamaged: boolean,
+    hyperDamaged: boolean = false
   ) {
     // Save the new data
     await this.update({
@@ -125,7 +156,8 @@ export default class CowboyBebopActor extends Actor {
         (this as any).system.traits,
         category,
         index,
-        newDamaged
+        newDamaged,
+        hyperDamaged
       ),
     });
   }
@@ -156,19 +188,34 @@ export default class CowboyBebopActor extends Actor {
     traits: Traits,
     category: string,
     index: number,
-    newDamaged: boolean
+    newDamaged: boolean,
+    newHyperDamaged: boolean = false
   ): Traits {
     if (traits[category] && traits[category][index]) {
       return {
         ...traits,
         [category]: traits[category].map((trait: Trait, i: number) =>
-          i === index ? { ...trait, damaged: newDamaged } : trait
+          i === index
+            ? { ...trait, damaged: newDamaged, hyperdamaged: newHyperDamaged }
+            : trait
         ),
       };
     } else {
       console.error("Trait or category not found");
       return traits;
     }
+  }
+
+  private restoreTraitImut(traits: Traits): any {
+    let result: Traits = new Object() as Traits;
+
+    genres.forEach((category: string) => {
+      result[category] = traits[category].map((trait: Trait) => {
+        return { ...trait, damaged: false, hyperdamaged: false };
+      });
+    });
+
+    return result;
   }
 
   //=============================================================================

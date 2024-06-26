@@ -36,7 +36,13 @@
       </section>
     </div>
 
-    <h4 class="dice-total" data-notes="{{ notes }}" data-carton="{{ carton }}">
+    <h4
+      class="dice-total
+    {{#if (gte carton 2) }}cowboy-dice-super-success{{/if}}
+    "
+      data-notes="{{ notes }}"
+      data-carton="{{ carton }}"
+    >
       {{#range 1 carton mouvement}}
       <i class="fa-solid fa-music cowboy-carton"></i>
       {{/range}}
@@ -61,13 +67,12 @@
       </button>
       {{/if}}
       {{#if (gt traitsUsed.length 0)}}
-      <h4 class="cowboy-roll-action-notes">
-        <i class="fa-solid fa-user-tag"></i>
-        {{ localize "COWBOY.roll.actions.traits" }}
-      </h4>
       <div class="cowboy-roll-traits cowboy-roll-action-notes">
         {{#each traitsUsed as |trait|}}
         <div class="cowboy-roll-trait">
+          <div class="cowboy-roll-trait-name">
+            {{ trait }}
+          </div>
           <button
             class="cowboy-roll-action"
             type="button"
@@ -79,8 +84,19 @@
           >
             <i class="fa-solid fa-user-tag"></i>
           </button>
-          <div class="cowboy-roll-trait-name">{{ trait }}</div>
+          <button
+            class="cowboy-roll-action"
+            type="button"
+            data-action="hyper-damage-trait"
+            data-rollid="{{ ../rollId }}"
+            data-actor-id="{{ ../actor.id }}"
+            data-trait="{{ trait }}"
+            data-category="{{ ../category }}"
+          >
+            <i class="fa-solid fa-house-chimney-crack"></i>
+          </button>
         </div>
+
         {{/each}}
       </div>
       {{/if}}

@@ -10,16 +10,4 @@
     </div>
     {{/range}}
   </div>
-  <div class="cowboy-health-action">
-    {{#if (and isGM (lt actor.system.cartridge 6))}}
-    <button class="cowboy-health-action-button" type="button" data-value="1">
-      Heal
-    </button>
-    {{/if}}
-    {{#if (gt actor.system.cartridge 0)}}
-    <button class="cowboy-health-action-button" type="button" data-value="-1">
-      Damage
-    </button>
-    {{/if}}
-  </div>
 </div>

@@ -1,4 +1,5 @@
 <form class="actor-sheet {{ cssClass }}" autocomplete="off">
+  {{> "systems/cowboy-bebop/templates/partials/actor-admin-panel.hbs"}}
   <header class="sheet-header">
     <img
       src="{{ actor.img }}"
@@ -27,46 +28,62 @@
         type="text"
         value="{{ actor.system.memory }}"
       />
+      {{> "systems/cowboy-bebop/templates/partials/rythm-counter.hbs"}}
     </div>
   </header>
-
-  {{> "systems/cowboy-bebop/templates/partials/rythm-counter.hbs" }}
 
   <section class="cowboy-actor-traits">
     {{#each actor.system.traits as |traitCategory traitCategoryId|}}
     <div class="cowboy-actor-trait-cat-header">
-      <h3>{{ traitCategoryId }}</h3>
+      <h3 class="cowboy-actor-trait-name">{{ traitCategoryId }}</h3>
       <button
         type="button"
         class="cowboy-actor-roll unbutton"
         data-category="{{ traitCategoryId }}"
       >
-        <i class="fa-solid fa-dice" aria-hidden="true"></i>
+        {{ localize "COWBOY.actor.roll" }}
+        <i class="fa-solid fa-dice"></i>
       </button>
     </div>
     <div class="cowboy-actor-trait-cat">
       {{#each traitCategory as |trait traitId|}}
-      <div
-        class="cowboy-actor-trait {{#if trait.damaged}}cowboy-actor-trait-isdamaged{{/if}}"
-      >
+      <div class="cowboy-actor-trait">
         <input
-          class="cowboy-actor-trait-name"
+          class="cowboy-actor-trait-name 
+            {{#if trait.hyperdamaged}}
+            cowboy-actor-trait-ishyperdamaged
+            {{else if trait.damaged }}
+              cowboy-actor-trait-isdamaged
+              
+            {{/if}}"
           data-index="{{ traitId }}"
           data-category="{{ traitCategoryId }}"
           name="traits-{{ traitCategoryId }}-{{ traitId }}-name"
           type="text"
           value="{{ trait.name }}"
         />
-        <input class="cowboy-actor-trait-damaged" data-index="{{ traitId }}"
+
+        {{#if (and trait.damaged (not trait.hyperdamaged))}}
+        <button
+          type="button"
+          class="cowboy-actor-trait-heal"
+          data-index="{{ traitId }}"
+          data-category="{{ traitCategoryId }}"
+        >
+          <i class="fa-solid fa-notes-medical"></i>
+        </button>
+        {{else}}
+        <input class="cowboy-actor-trait-status" data-index="{{ traitId }}"
         data-category="{{ traitCategoryId }}" name="traits-{{
           traitCategoryId
         }}-{{ traitId }}-damaged" type="checkbox"
         {{#if trait.damaged}}checked{{/if}}
-        {{#unless trait.name}}disabled{{/unless}}
-        />
+        disabled />
+        {{/if}}
       </div>
       {{/each}}
     </div>
     {{/each}}
   </section>
 </form>
+{{ log actor }}

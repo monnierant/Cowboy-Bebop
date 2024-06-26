@@ -15,6 +15,7 @@ async function preloadTemplates(): Promise<any> {
   const templatePaths = [
     `systems/${moduleId}/templates/partials/rythm-counter.hbs`,
     `systems/${moduleId}/templates/partials/health-counter.hbs`,
+    `systems/${moduleId}/templates/partials/actor-admin-panel.hbs`,
   ];
 
   return loadTemplates(templatePaths);
@@ -55,10 +56,6 @@ Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {
   html.find(".directory-header .action-buttons").append(button);
 });
 
-// Hooks.on("renderChatLog", (app: any, html: any, data: any): any => {
-//   documents.Item5e.chatListeners(html);
-//   documents.ChatMessage5e.onRenderChatLog(html);
-// });
 Hooks.on(
   "renderChatMessage",
   (app: Application, html: JQuery, data: any): void => {
@@ -84,7 +81,15 @@ Hooks.on(
             datas.category ?? "",
             datas.trait ?? ""
           );
-
+          break;
+        case "hyper-damage-trait":
+          actor?.actionHyperDamageTrait(
+            html,
+            event.currentTarget as HTMLInputElement,
+            parseInt(datas.rollid ?? "0"),
+            datas.category ?? "",
+            datas.trait ?? ""
+          );
           break;
         case "collect":
           //TODO: implement collect

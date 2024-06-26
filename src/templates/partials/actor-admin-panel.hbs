@@ -1,0 +1,17 @@
+{{#if isGM}}
+<div class="cowboy-admin-pannel">
+  {{#if (and isGM (lt actor.system.cartridge 6))}}
+  <button class="cowboy-admin-action-health" type="button" data-value="1">
+    {{ localize "COWBOY.actor.admin.heal" }}
+  </button>
+  {{/if}}
+  {{#if (gt actor.system.cartridge 0)}}
+  <button class="cowboy-admin-action-health" type="button" data-value="-1">
+    {{ localize "COWBOY.actor.admin.damage" }}
+  </button>
+  {{/if}}
+  <button class="cowboy-admin-action-restore" type="button">
+    {{ localize "COWBOY.actor.admin.restore" }}
+  </button>
+</div>
+{{/if}}

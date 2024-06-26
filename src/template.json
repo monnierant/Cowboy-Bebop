@@ -12,34 +12,34 @@
       "memory": "",
       "traits": {
         "rock": [
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false }
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
         ],
         "blues": [
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false }
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
         ],
         "jazz": [
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false }
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
         ],
         "dance": [
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false }
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
         ],
         "tango": [
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false },
-          { "name": "", "damaged": false }
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
         ]
       },
       "cartridge": 6,
       "rythme": 0,
-      "notes": 0,
+      "cartons": 0,
       "burden": [],
       "ship": {
         "main": "",

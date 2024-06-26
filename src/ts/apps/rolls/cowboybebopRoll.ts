@@ -31,7 +31,7 @@ export default class CowboyBebopRoll {
     const diceOptions = {
       nb:
         this._mouvement.dices +
-        traitsUsed.length +
+        this._traitsUsed.length +
         Math.abs(this._advantage) +
         bonus,
       advantage: advantageInstruction[this._advantage + 1],
@@ -55,6 +55,23 @@ export default class CowboyBebopRoll {
   private _dices: Roll[] = [];
   private _message: ChatMessage | undefined;
 
+  public async reRoll(traitToDamage: string) {
+    this._traitsUsed = this._traitsUsed.filter((e) => e !== traitToDamage);
+
+    const bonus = this.genre === this.category ? 1 : 0;
+    const advantageInstruction = ["dh", "", "dl"];
+    const diceOptions = {
+      nb:
+        this._mouvement.dices +
+        this._traitsUsed.length +
+        Math.abs(this._advantage) +
+        bonus,
+      advantage: advantageInstruction[this._advantage + 1],
+    };
+    this._roll = new Roll(`${diceOptions.nb}d6${diceOptions.advantage}`);
+    this.roll();
+  }
+
   public async roll() {
     this._result = await this._roll.roll();
 
@@ -68,7 +85,7 @@ export default class CowboyBebopRoll {
 
     this._carton =
       (this._result.total >= this._mouvement.difficulty ? 1 : 0) +
-      (this._dices.filter((e: any) => e.result === 6).length > 0 ? 1 : 0);
+      (this._dices.filter((e: any) => e.result === 6).length >= 2 ? 1 : 0);
 
     this._notes =
       this._dices.filter((e: any) => e.result === 1).length > 0
@@ -124,5 +141,13 @@ export default class CowboyBebopRoll {
     this._carton = 0;
     this._notes = 0;
     this.toMessage();
+  }
+
+  public getCarton() {
+    return this._carton;
+  }
+
+  public getNotes() {
+    return this._notes;
   }
 }
