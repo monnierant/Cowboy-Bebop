@@ -72,6 +72,19 @@ export default class CowboyBebopActor extends Actor {
     this.removeMessage(html, element);
   }
 
+  public async actionCollectCarton(
+    html: JQuery,
+    element: HTMLInputElement,
+    rollId: number,
+    cartons: number
+  ) {
+    await this.update({
+      "system.cartons": (this as any).system.cartons + cartons,
+    });
+    this._rolls[rollId].deletePreviousMessage();
+    this.removeMessage(html, element);
+  }
+
   public async actionHyperDamageTrait(
     html: JQuery,
     element: HTMLInputElement,

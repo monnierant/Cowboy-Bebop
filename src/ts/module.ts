@@ -94,6 +94,12 @@ Hooks.on(
         case "collect":
           //TODO: implement collect
           console.log("collect TODO");
+          actor?.actionCollectCarton(
+            html,
+            event.currentTarget as HTMLInputElement,
+            parseInt(datas.rollid ?? "0"),
+            parseInt(datas.carton ?? "0")
+          );
           break;
       }
     });
