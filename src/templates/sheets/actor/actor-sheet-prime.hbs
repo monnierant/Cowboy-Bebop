@@ -1,0 +1,46 @@
+<form class="actor-sheet {{ cssClass }}" autocomplete="off">
+  <header class="sheet-header">
+    <img
+      src="{{ actor.img }}"
+      data-edit="img"
+      title="{{ actor.name }}"
+      height="64"
+      width="64"
+    />
+    <div>
+      <label>{{localize 'COWBOY.actor.name'}}</label>
+      <input name="name" type="text" value="{{ actor.name }}" />
+      <label>{{localize 'COWBOY.actor.concept'}}</label>
+      <input
+        name="system.concept"
+        type="text"
+        value="{{ actor.system.concept }}"
+      />
+    </div>
+  </header>
+
+  {{ log actor }}
+
+  <section class="cowboy-prime-cadrans">
+    <div class="cowboy-prime-cadrans-grid">
+      {{#each actor.system.cadrans as |cadran cadranId|}}
+      {{> "systems/cowboy-bebop/templates/partials/cadran-counter.hbs" cadranid=cadranId cadran=cadran}}
+      {{/each}}
+    </div>
+    {{#if isGM}}
+    <div class="cowboy-prime-cadrans-admin">
+      <div class="cowboy-prime-cadrans-buttons">
+        <button type="button" class="cowboy-cadrans-add" data-size="4">
+          +4
+        </button>
+        <button type="button" class="cowboy-cadrans-add" data-size="6">
+          +6
+        </button>
+        <button type="button" class="cowboy-cadrans-add" data-size="8">
+          +8
+        </button>
+      </div>
+    </div>
+    {{/if}}
+  </section>
+</form>

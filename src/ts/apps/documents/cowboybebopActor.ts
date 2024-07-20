@@ -1,5 +1,5 @@
 import { genres } from "../../constants";
-import { Trait, Traits } from "../../types";
+import { Cadran, Trait, Traits } from "../../types";
 import CowboyBebopRollDialog from "../dialog/cowboybebopRollDialog";
 import CowboyBebopRoll from "../rolls/cowboybebopRoll";
 
@@ -234,4 +234,20 @@ export default class CowboyBebopActor extends Actor {
   //=============================================================================
   // NPC
   //=============================================================================
+
+  public async addCadran(genre: string, size: number) {
+    const cadran: Cadran = {
+      name: "",
+      size: size,
+      genre: genre,
+      isImportant: false,
+      secretNote: "",
+      mouvement: 0,
+      value: 0,
+    };
+
+    await this.update({
+      "system.cadrans": [...(this as any).system.cadrans, cadran],
+    });
+  }
 }

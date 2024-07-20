@@ -47,7 +47,21 @@
       }
     },
     "prime": {
-      "cartons": 0,
+      "notes": {
+        "rock": 0,
+        "blues": 0,
+        "jazz": 0,
+        "dance": 0,
+        "tango": 0
+      },
+      "cartons": {
+        "rock": 0,
+        "blues": 0,
+        "jazz": 0,
+        "dance": 0,
+        "tango": 0
+      },
+      "cadrans": [],
       "templates": ["common"]
     }
   },

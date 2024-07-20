@@ -6,16 +6,17 @@ import "../styles/style.scss";
 import CowboyBebopItemSheet from "./apps/sheets/cowboybebopItemSheet";
 import CowboyBebopActorSheet from "./apps/sheets/cowboybebopActorSheet";
 import CowboyBebopActor from "./apps/documents/cowboybebopActor";
-import { moduleId } from "./constants";
-import { MyModule } from "./types";
-
-let module: MyModule;
+import { colors, moduleId } from "./constants";
+import { Cadran } from "./types";
+// import CowboyBebopRoll from "./apps/rolls/cowboybebopRoll";
+// import CowboyBebopResultRollMessageData from "./apps/messages/cowboybebopResultRollMessageData";
 
 async function preloadTemplates(): Promise<any> {
   const templatePaths = [
     `systems/${moduleId}/templates/partials/rythm-counter.hbs`,
     `systems/${moduleId}/templates/partials/health-counter.hbs`,
     `systems/${moduleId}/templates/partials/actor-admin-panel.hbs`,
+    `systems/${moduleId}/templates/partials/cadran-counter.hbs`,
   ];
 
   return loadTemplates(templatePaths);
@@ -35,7 +36,27 @@ Hooks.once("init", () => {
     }
   );
 
+  Handlebars.registerHelper(
+    "circlePortion",
+    function (index: number, total: number, radius: number) {
+      return index * (radius / total);
+    }
+  );
+
+  Handlebars.registerHelper("divide", function (a: number, b: number) {
+    return a / b;
+  });
+
+  Handlebars.registerHelper("coloron", function (cadran: Cadran) {
+    return colors[cadran.genre].on;
+  });
+
+  Handlebars.registerHelper("coloroff", function (cadran: Cadran) {
+    return colors[cadran.genre].off;
+  });
+
   CONFIG.Actor.documentClass = CowboyBebopActor;
+  // CONFIG.ChatMessage.dataModels.rollMessage = CowboyBebopResultRollMessageData;
 
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet(moduleId, CowboyBebopItemSheet, { makeDefault: true });
@@ -44,16 +65,6 @@ Hooks.once("init", () => {
   Actors.registerSheet(moduleId, CowboyBebopActorSheet, { makeDefault: true });
 
   preloadTemplates();
-});
-
-Hooks.on("renderActorDirectory", (_: Application, html: JQuery) => {
-  const button = $(
-    `<button class="cc-sidebar-button" type="button">🐶</button>`
-  );
-  button.on("click", () => {
-    module.dogBrowser.render(true);
-  });
-  html.find(".directory-header .action-buttons").append(button);
 });
 
 Hooks.on(

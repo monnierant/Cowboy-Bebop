@@ -24,6 +24,16 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
+    if (this.actor.type === "chasseur") {
+      this.activateListenersPC(html);
+    }
+
+    if (this.actor.type === "prime") {
+      this.activateListenersNPC(html);
+    }
+  }
+
+  private activateListenersPC(html: JQuery) {
     html
       .find(".cowboy-admin-action-health")
       .on("click", this._onDamage.bind(this));
@@ -39,6 +49,10 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     html
       .find(".cowboy-admin-action-restore")
       .on("click", this._onRestore.bind(this));
+  }
+
+  private activateListenersNPC(html: JQuery) {
+    html.find(".cowboy-cadrans-add").on("click", this._onAddCadran.bind(this));
   }
 
   // ========================================
@@ -120,5 +134,13 @@ export default class CowboyBebopItemSheet extends ActorSheet {
 
     // Save the new data
     await (this.actor as CowboyBebopActor).prepareDicePool(traitCategoryId);
+  }
+
+  private _onAddCadran(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const size = parseInt((event.target as HTMLElement).dataset.size ?? "");
+    (this.actor as CowboyBebopActor).addCadran("jazz", size);
   }
 }

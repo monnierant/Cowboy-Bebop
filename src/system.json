@@ -13,6 +13,11 @@
     "verified": "10",
     "maximum": "12"
   },
+  "documentTypes": {
+    "ChatMessage": {
+      "rollMessage": {}
+    }
+  },
   "languages": [
     {
       "lang": "en",
@@ -25,6 +30,6 @@
       "path": "languages/fr.json"
     }
   ],
-  "styles": ["style.css"],
+  "styles": ["scripts/assets/module.css"],
   "esmodules": ["scripts/module.js"]
 }

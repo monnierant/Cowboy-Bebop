@@ -15,14 +15,20 @@ console.log(process.env.VSCODE_INJECTION);
 
 const newLocal = "writeBundle";
 export default defineConfig({
+  base: "",
   build: {
     // sourcemap: true,
+    assetsDir: "dist/assets/",
     rollupOptions: {
       input: "src/ts/module.ts",
       output: {
-        dir: "dist/scripts",
+        assetFileNames: "assets/[name].[ext]",
+        dir: "dist/scripts/",
         entryFileNames: "module.js",
         format: "es",
+      },
+      watch: {
+        include: "src/**",
       },
     },
   },
@@ -31,15 +37,16 @@ export default defineConfig({
       targets: [{ src: "src/*.json", dest: "dist" }],
     }),
     updateModuleManifestPlugin(kindOfProject),
-    scss({
-      output: "dist/style.css",
-      // sourceMap: true,
-      watch: ["src/styles/*.scss"],
-    }),
+    // scss({
+    //   fileName: "style.css",
+    //   sourceMap: true,
+    //   watch: ["src/styles/*.scss"],
+    // }),
     copy({
       targets: [
         { src: "src/languages", dest: "dist" },
         { src: "src/templates", dest: "dist" },
+        // { src: "src/images", dest: "dist" },
       ],
       // hook: newLocal,
     }),
@@ -82,6 +89,7 @@ function updateModuleManifestPlugin(kind: string = "module"): Plugin {
 }
 
 function conditionalCopyPlugin(kind: string = "module"): Plugin {
+  console.log(`kind: ${kind}`);
   return {
     name: "conditional-copy-plugin",
     async writeBundle(): Promise<void> {
