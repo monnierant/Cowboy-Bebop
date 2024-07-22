@@ -1,4 +1,5 @@
 @import "./prime/cadran.scss";
+@import "./prime/tokens.scss";
 
 .cowboy-prime-cadrans-grid {
   display: flex;
@@ -13,4 +14,21 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 1em;
+}
+
+.cowboy-prime-selected {
+  background-color: #0dcaca35;
+}
+
+.cowboy-cadran-admin {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.cowboy-cadran-header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }

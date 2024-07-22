@@ -15,21 +15,26 @@ export const colors: Colors = {
   rock: {
     on: "#f44336",
     off: "#e57373",
+    fa: "fa-bolt-lightning",
   },
   blues: {
     on: "#2196f3",
     off: "#64b5f6",
+    fa: "fa-guitar",
   },
   jazz: {
-    on: "#4caf50",
-    off: "#81c784",
-  },
-  dance: {
     on: "#ff9800",
     off: "#ffb74d",
+    fa: "fa-record-vinyl",
+  },
+  dance: {
+    on: "#4caf50",
+    off: "#81c784",
+    fa: "fa-drum",
   },
   tango: {
     on: "#9c27b0",
     off: "#ba68c8",
+    fa: "fa-shoe-prints",
   },
 };

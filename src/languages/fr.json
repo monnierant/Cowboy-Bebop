@@ -1,11 +1,17 @@
 {
   "COWBOY": {
     "actor": {
+      "goal": "Objectif",
+      "threat": "Menace",
+      "important": "Important",
+      "normal": "Normal",
       "roll": "Lancer",
       "name": "NOM",
       "concept": "CONCEPT",
       "memory": "SOUVENIR",
       "burden": "FARDEAU",
+      "currentTarget": "Cible actuelle",
+      "setCurrentTarget": "Choisir cette Cible",
       "admin": {
         "heal": "Soin",
         "damage": "Dégat",

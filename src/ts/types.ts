@@ -22,11 +22,14 @@ export interface Cadran {
   secretNote: string;
   mouvement: number;
   value: number;
+  isObjective: boolean;
+  isVisibleByPlayers: boolean;
 }
 
 export interface Colors {
   [key: string]: {
     on: string;
     off: string;
+    fa: string;
   };
 }

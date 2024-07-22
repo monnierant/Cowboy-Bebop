@@ -11,6 +11,18 @@ export default class CowboyBebopActor extends Actor {
   //=============================================================================
 
   // ========================================
+  // Common
+  // ========================================
+  public async actionRemoveRoll(
+    html: JQuery,
+    element: HTMLInputElement,
+    rollId: number
+  ) {
+    this._rolls[rollId].deletePreviousMessage();
+    this.removeMessage(html, element);
+  }
+
+  // ========================================
   // Roll
   // ========================================
   public async roll(
@@ -72,19 +84,6 @@ export default class CowboyBebopActor extends Actor {
     this.removeMessage(html, element);
   }
 
-  public async actionCollectCarton(
-    html: JQuery,
-    element: HTMLInputElement,
-    rollId: number,
-    cartons: number
-  ) {
-    await this.update({
-      "system.cartons": (this as any).system.cartons + cartons,
-    });
-    this._rolls[rollId].deletePreviousMessage();
-    this.removeMessage(html, element);
-  }
-
   public async actionHyperDamageTrait(
     html: JQuery,
     element: HTMLInputElement,
@@ -126,7 +125,23 @@ export default class CowboyBebopActor extends Actor {
       .filter((trait: Trait) => trait.name != "")
       .map((trait: Trait) => trait.name);
 
-    const dialog = new CowboyBebopRollDialog("rock", category, this, dicePool);
+    const target = (game as any).actors
+      ?.filter((actor: any) => {
+        return actor.system.isCurrentTarget && actor.type === "prime";
+      })
+      .at(0);
+
+    if (!target) {
+      ui.notifications?.warn("No target selected");
+      return;
+    }
+
+    const dialog = new CowboyBebopRollDialog(
+      target.system.genre,
+      category,
+      this,
+      dicePool
+    );
 
     dialog.render(true);
     console.log("dialogOpened");
@@ -235,19 +250,113 @@ export default class CowboyBebopActor extends Actor {
   // NPC
   //=============================================================================
 
-  public async addCadran(genre: string, size: number) {
+  public async actionCollectCarton(
+    genre: string,
+    cartons: number,
+    notes: number
+  ) {
+    await this.collectNotes(genre, notes);
+    await this.collectCartons(genre, cartons);
+  }
+
+  public async addCadran(
+    genre: string,
+    size: number,
+    isObjective: boolean,
+    isImportant: boolean
+  ) {
     const cadran: Cadran = {
       name: "",
       size: size,
       genre: genre,
-      isImportant: false,
+      isImportant: isImportant,
       secretNote: "",
       mouvement: 0,
       value: 0,
+      isObjective: isObjective,
+      isVisibleByPlayers: false,
     };
-
     await this.update({
       "system.cadrans": [...(this as any).system.cadrans, cadran],
+    });
+  }
+
+  public async collectNotes(genre: string, notes: number) {
+    let newNotes = (this as any).system.notes;
+    newNotes[genre] += notes;
+    await this.update({
+      "system.notes": newNotes,
+    });
+  }
+
+  public async collectCartons(genre: string, cartons: number) {
+    let newCartons = (this as any).system.cartons;
+    newCartons[genre] += cartons;
+    await this.update({
+      "system.cartons": newCartons,
+    });
+  }
+
+  public async setCurrentTarget(newTarget: boolean = true) {
+    await this.update({
+      "system.isCurrentTarget": newTarget,
+    });
+    if (newTarget) {
+      (game as any).actors
+        ?.filter(
+          (actor: CowboyBebopActor) =>
+            actor.id !== this.id && actor.type === "prime"
+        )
+        .forEach((actor: CowboyBebopActor) => {
+          actor.setCurrentTarget(false);
+        });
+    }
+  }
+
+  public async deleteCadran(index: number) {
+    const cadrans = [...(this as any).system.cadrans];
+    cadrans.splice(index, 1);
+    await this.update({
+      "system.cadrans": cadrans,
+    });
+  }
+
+  public async increaseCadran(
+    index: number,
+    genre: string,
+    type: string
+  ): Promise<boolean> {
+    const cadrans = (this as any).system.cadrans;
+    const cadran = cadrans[index];
+
+    console.log(cadran, genre, type);
+
+    // Check if the cadran is at the last value
+    if (cadran.value >= cadran.size - 1 && cadran.genre != genre)
+      return new Promise<boolean>((resolve) => resolve(false));
+
+    if (type !== cadran.isObjective ? "cartons" : "notes")
+      return new Promise<boolean>((resolve) => resolve(false));
+
+    cadrans[index].value += 1;
+    await this.update({
+      "system.cadrans": cadrans,
+    });
+
+    return new Promise<boolean>((resolve) => resolve(true));
+  }
+
+  public async toggleCadranVisibility(index: number) {
+    const cadrans = (this as any).system.cadrans;
+    cadrans[index].isVisibleByPlayers = !cadrans[index].isVisibleByPlayers;
+    await this.update({
+      "system.cadrans": cadrans,
+    });
+  }
+
+  public async setGenre(genre: string) {
+    await this.update({
+      "system.genre": genre,
     });
   }
 }

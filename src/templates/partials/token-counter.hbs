@@ -1,0 +1,12 @@
+<div class="cowboy-actor-tokens">
+  {{#each tokens as |token tokenId|}}
+  <a
+    class="cowboy-actor-token"
+    data-genre="{{ tokenId }}"
+    data-type="{{ type }}"
+  >
+    {{ genreToIcon tokenId ../on }}
+    <div class="cowboy-actor-token-value">{{ token }}</div>
+  </a>
+  {{/each}}
+</div>

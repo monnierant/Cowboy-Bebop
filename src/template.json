@@ -3,6 +3,7 @@
     "types": ["chasseur", "prime"],
     "templates": {
       "common": {
+        "isCurrentTarget": false,
         "groove": "",
         "concept": ""
       }
@@ -39,7 +40,6 @@
       },
       "cartridge": 6,
       "rythme": 0,
-      "cartons": 0,
       "burden": [],
       "ship": {
         "main": "",
@@ -47,6 +47,7 @@
       }
     },
     "prime": {
+      "genre": "rock",
       "notes": {
         "rock": 0,
         "blues": 0,

@@ -1,0 +1,10 @@
+.cowboy-actor-tokens {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 0.5em;
+  .cowboy-actor-token-selected {
+    border: 2px solid #0dcaca;
+    border-radius: 0.2em;
+  }
+}

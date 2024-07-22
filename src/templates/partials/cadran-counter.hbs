@@ -1,14 +1,24 @@
 <div
   class="cowboy-cadran-counter {{#if cadran.isImportant}}cowboy-cadran-important{{/if}}"
 >
-  <input
-    type="text"
-    value="{{ cadran.name }}"
-    class="cowboy-cadran-name"
-    data-index="{{ cadranid }}"
-  />
+  <div class="cowboy-cadran-header">
+    {{ genreToIcon cadran.genre }}
+    <input
+      type="text"
+      value="{{ cadran.name }}"
+      class="cowboy-cadran-name"
+      data-index="{{ cadranid }}"
+    />
+    {{#if isGM}}
+    <input type="checkbox" class="cowboy-cadran-visible" data-index="{{
+      cadranid
+    }}" {{#if cadran.isVisibleByPlayers}}checked{{/if}}
+    />
+    {{else}}
+    {{ genreToIcon cadran.genre }}
+    {{/if}}
+  </div>
 
-  {{ log cadran }}
   <div
     class="cowboy-cadran"
     style="
@@ -24,7 +34,6 @@
     ></div>
     {{/range}}
   </div>
-  <div class="cowboy-test-image"></div>
   {{#if isGM}}
   <div class="cowboy-cadran-admin">
     <button
@@ -41,7 +50,7 @@
       data-action="close"
       data-index="{{ cadranid }}"
     >
-      <icon class="fa-solid fa-plus"></icon>
+      <icon class="fa-solid fa-minus"></icon>
     </button>
     <button
       type="button"
