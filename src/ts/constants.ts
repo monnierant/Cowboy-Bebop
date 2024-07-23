@@ -37,4 +37,9 @@ export const colors: Colors = {
     off: "#ba68c8",
     fa: "fa-shoe-prints",
   },
+  closed: {
+    on: "#444444",
+    off: "#aaaaaa",
+    fa: "fa-lock",
+  },
 };

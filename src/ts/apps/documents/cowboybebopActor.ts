@@ -275,6 +275,7 @@ export default class CowboyBebopActor extends Actor {
       value: 0,
       isObjective: isObjective,
       isVisibleByPlayers: false,
+      isClosed: false,
     };
     await this.update({
       "system.cadrans": [...(this as any).system.cadrans, cadran],
@@ -321,6 +322,25 @@ export default class CowboyBebopActor extends Actor {
     });
   }
 
+  public async closeCadran(index: number) {
+    const cadrans = (this as any).system.cadrans;
+    cadrans[index].isClosed = true;
+
+    // open a modal to ask for confirmation
+    const confirmed = await Dialog.confirm({
+      title: "Close Cadran",
+      content: "Are you sure you want to close this cadran?",
+      yes: () => true,
+      no: () => false,
+    });
+
+    if (confirmed) {
+      await this.update({
+        "system.cadrans": cadrans,
+      });
+    }
+  }
+
   public async increaseCadran(
     index: number,
     genre: string,
@@ -331,17 +351,33 @@ export default class CowboyBebopActor extends Actor {
 
     console.log(cadran, genre, type);
 
-    // Check if the cadran is at the last value
-    if (cadran.value >= cadran.size - 1 && cadran.genre != genre)
+    if ((this as any).system[type][genre] <= 0) {
+      console.log("this as any).system[type][genre] <= 0");
       return new Promise<boolean>((resolve) => resolve(false));
+    }
 
-    if (type !== cadran.isObjective ? "cartons" : "notes")
+    // Check if the cadran is at the last value
+    if (cadran.value >= cadran.size - 1 && cadran.genre != genre) {
+      console.log("cadran.value >= cadran.size - 1 && cadran.genre != genre");
       return new Promise<boolean>((resolve) => resolve(false));
+    }
+
+    if (cadran.value >= cadran.size) {
+      console.log("cadran.value >= cadran.size");
+      return new Promise<boolean>((resolve) => resolve(false));
+    }
+
+    if (type !== (cadran.isObjective ? "cartons" : "notes")) {
+      console.log("type !== cadran.isObjective ? cartons : notes");
+      return new Promise<boolean>((resolve) => resolve(false));
+    }
 
     cadrans[index].value += 1;
     await this.update({
       "system.cadrans": cadrans,
     });
+
+    this.addToken(genre, type, -1);
 
     return new Promise<boolean>((resolve) => resolve(true));
   }
@@ -358,5 +394,26 @@ export default class CowboyBebopActor extends Actor {
     await this.update({
       "system.genre": genre,
     });
+  }
+
+  public async addToken(genre: string, type: string, value: number) {
+    var tokens = (this as any).system[type];
+
+    console.log(type);
+    console.log((this as any).system);
+    tokens[genre] = Math.max(0, tokens[genre] + value);
+
+    switch (type) {
+      case "cartons":
+        await this.update({
+          "system.cartons": tokens,
+        });
+        break;
+      case "notes":
+        await this.update({
+          "system.notes": tokens,
+        });
+        break;
+    }
   }
 }

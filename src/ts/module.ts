@@ -43,11 +43,11 @@ Hooks.once("init", () => {
   });
 
   Handlebars.registerHelper("coloron", function (cadran: Cadran) {
-    return colors[cadran.genre]?.on;
+    return colors[cadran.isClosed ? "closed" : cadran.genre]?.on;
   });
 
   Handlebars.registerHelper("coloroff", function (cadran: Cadran) {
-    return colors[cadran.genre]?.off;
+    return colors[cadran.isClosed ? "closed" : cadran.genre]?.off;
   });
 
   CONFIG.Actor.documentClass = CowboyBebopActor;

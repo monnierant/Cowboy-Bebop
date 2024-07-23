@@ -45,3 +45,21 @@
     }
   }
 }
+
+.cowboy-cadran-counter {
+  &.cowboy-notes {
+    background-color: #ca590d35;
+  }
+
+  &.cowboy-cartons {
+    background-color: #20ca0d35;
+  }
+
+  &.cowboy-cadran-lock {
+    background-color: #61616135;
+  }
+}
+
+icon.cowboy-cadran-important {
+  color: goldenrod;
+}

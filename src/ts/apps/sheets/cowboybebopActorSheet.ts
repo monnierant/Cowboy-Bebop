@@ -74,6 +74,9 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     html
       .find(".cowboy-prime-genre")
       .on("change", this._onSelectGenre.bind(this));
+    html
+      .find(".cowboy-prime-tokens-add")
+      .on("click", this._onAddToken.bind(this));
   }
 
   // ========================================
@@ -248,6 +251,9 @@ export default class CowboyBebopItemSheet extends ActorSheet {
       case "remove":
         (this.actor as CowboyBebopActor).deleteCadran(cadranIndex);
         break;
+      case "close":
+        (this.actor as CowboyBebopActor).closeCadran(cadranIndex);
+        break;
       case "increase":
         result = await (this.actor as CowboyBebopActor).increaseCadran(
           cadranIndex,
@@ -279,5 +285,20 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     const genre = (event.currentTarget as HTMLInputElement).value;
 
     await (this.actor as CowboyBebopActor).setGenre(genre ?? "");
+  }
+
+  private async _onAddToken(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const value = parseInt(
+      (event.currentTarget as HTMLElement).dataset.value ?? "0"
+    );
+
+    await (this.actor as CowboyBebopActor).addToken(
+      this.genreSelected ?? "",
+      this.typeSelected ?? "",
+      value
+    );
   }
 }

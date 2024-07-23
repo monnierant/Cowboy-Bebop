@@ -41,7 +41,12 @@
       {{/if}}
     </div>
   </header>
-
+  <section class="cowboy-prime-tokens">
+    <div class="cowboy-prime-tokens-container">
+      {{> "systems/cowboy-bebop/templates/partials/token-counter.hbs" tokens=actor.system.notes on=false type="notes" add="+1" }}
+      {{> "systems/cowboy-bebop/templates/partials/token-counter.hbs" tokens=actor.system.cartons on=true type="cartons" add="-1"}}
+    </div>
+  </section>
   <section class="cowboy-prime-cadrans">
     <div class="cowboy-prime-cadrans-grid">
       {{#each actor.system.cadrans as |cadran cadranId|}}
@@ -87,8 +92,5 @@
     </div>
     {{/if}}
   </section>
-  <section class="cowboy-prime-tokens">
-    {{> "systems/cowboy-bebop/templates/partials/token-counter.hbs" tokens=actor.system.notes on=false type="notes" }}
-    {{> "systems/cowboy-bebop/templates/partials/token-counter.hbs" tokens=actor.system.cartons on=true type="cartons" }}
-  </section>
+
 </form>

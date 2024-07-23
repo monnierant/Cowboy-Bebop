@@ -24,6 +24,7 @@ export interface Cadran {
   value: number;
   isObjective: boolean;
   isVisibleByPlayers: boolean;
+  isClosed: boolean;
 }
 
 export interface Colors {
