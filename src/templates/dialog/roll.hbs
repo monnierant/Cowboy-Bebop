@@ -4,9 +4,15 @@
     <h3>Difficulty</h3>
     <select class="cowboy-dialog-rang">
       {{#each rangs as |rang index|}}
+      {{#if (eq index ../mouvementIndex)}}
+      <option value="{{ index }}" selected>
+        {{ rang.name }} ({{ rang.difficulty }})
+      </option>
+      {{else}}
       <option value="{{ index }}">
         {{ rang.name }} ({{ rang.difficulty }})
       </option>
+      {{/if}}
       {{/each}}
     </select>
   </section>

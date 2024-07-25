@@ -10,6 +10,7 @@ export default class CowboyBebopRollDialog extends Dialog {
   constructor(
     genre: string,
     category: string,
+    mouvementIndex: number,
     actor: CowboyBebopActor,
     dicePool: string[],
     options: any = {},
@@ -45,6 +46,7 @@ export default class CowboyBebopRollDialog extends Dialog {
     this.actor = actor;
     this.genre = genre;
     this.category = category;
+    this.mouvementIndex = mouvementIndex;
 
     this.dicePool = dicePool;
   }
@@ -57,6 +59,7 @@ export default class CowboyBebopRollDialog extends Dialog {
   public genre: string;
   public category: string;
   public roll: CowboyBebopRoll | undefined;
+  public mouvementIndex: number;
 
   // Define the template to use for this sheet
   override get template() {
@@ -71,6 +74,8 @@ export default class CowboyBebopRollDialog extends Dialog {
     data.dicePool = this.dicePool;
     data.genre = this.genre;
     data.category = this.category;
+    data.mouvementIndex = this.mouvementIndex;
+    data.mouvement = rangs[this.mouvementIndex];
     data.rangs = rangs;
     return data;
   }

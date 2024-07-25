@@ -26,18 +26,30 @@
       <label>{{localize 'COWBOY.actor.genre'}}</label>
       <select class="cowboy-prime-genre">
         {{#each genres as |genre|}}
-        <option value="{{ genre }}" {{#if (eq genre ../actor.system.genre)}}selected{{/if}}>
+        {{#if (eq genre ../actor.system.genre)}}
+        <option value="{{ genre }}" selected>
           {{ genre }}
         </option>
+        {{else}}
+        <option value="{{ genre }}">
+          {{ genre }}
+        </option>
+        {{/if}}
         {{/each}}
       </select>
       <label>{{localize 'COWBOY.actor.rang'}}</label>
       {{log actor}}
       <select class="cowboy-prime-mouvement">
         {{#each rangs as |rang rangIndex|}}
-        <option value="{{ rangIndex }}" {{#if (eq rangIndex ../actor.system.mouvement)}}selected{{/if}}>
+        {{#if (eq rangIndex ../actor.system.mouvement)}}
+        <option value="{{ rangIndex }}" selected>
           {{ rang.name }}
         </option>
+        {{else}}
+        <option value="{{ rangIndex }}" selected>
+          {{ rang.name }}
+        </option>
+        {{/if}}
         {{/each}}
       </select>
     </div>

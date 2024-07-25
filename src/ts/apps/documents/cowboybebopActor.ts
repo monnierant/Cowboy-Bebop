@@ -139,6 +139,7 @@ export default class CowboyBebopActor extends Actor {
     const dialog = new CowboyBebopRollDialog(
       target.system.genre,
       category,
+      target.system.mouvement,
       this,
       dicePool
     );
@@ -403,7 +404,7 @@ export default class CowboyBebopActor extends Actor {
   }
 
   public async addToken(genre: string, type: string, value: number) {
-    var tokens = (this as any).system[type];
+    const tokens = (this as any).system[type];
 
     console.log(type);
     console.log((this as any).system);
