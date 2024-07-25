@@ -1,4 +1,4 @@
-import { moduleId, genres } from "../../constants";
+import { moduleId, genres, rangs } from "../../constants";
 // import { Traits, Trait } from "../../types";
 import CowboyBebopActor from "../documents/cowboybebopActor";
 
@@ -16,6 +16,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     let data: any = super.getData();
     data.isGM = (game as Game).user?.isGM;
     data.genres = genres;
+    data.rangs = rangs;
     data.genreSelected = this.genreSelected; // To remove when will be used to fill a cadran
     data.typeSelected = this.typeSelected; // to remove when will be used to fill a cadran
     return data;
@@ -30,12 +31,13 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) return;
 
-    if (this.actor.type === "chasseur") {
-      this.activateListenersPC(html);
-    }
-
-    if (this.actor.type === "prime") {
-      this.activateListenersNPC(html);
+    switch (this.actor.type) {
+      case "chasseur":
+        this.activateListenersPC(html);
+        break;
+      case "prime":
+        this.activateListenersNPC(html);
+        break;
     }
   }
 
@@ -74,6 +76,9 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     html
       .find(".cowboy-prime-genre")
       .on("change", this._onSelectGenre.bind(this));
+    html
+      .find(".cowboy-prime-mouvement")
+      .on("change", this._onSelectMouvement.bind(this));
     html
       .find(".cowboy-prime-tokens-add")
       .on("click", this._onAddToken.bind(this));
@@ -285,6 +290,17 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     const genre = (event.currentTarget as HTMLInputElement).value;
 
     await (this.actor as CowboyBebopActor).setGenre(genre ?? "");
+  }
+
+  private async _onSelectMouvement(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const mouvement = parseInt(
+      (event.currentTarget as HTMLInputElement).value ?? "0"
+    );
+
+    await (this.actor as CowboyBebopActor).setMouvement(mouvement);
   }
 
   private async _onAddToken(event: Event) {

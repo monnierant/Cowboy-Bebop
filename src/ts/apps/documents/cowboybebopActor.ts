@@ -396,6 +396,12 @@ export default class CowboyBebopActor extends Actor {
     });
   }
 
+  public async setMouvement(mouvement: number) {
+    await this.update({
+      "system.mouvement": mouvement,
+    });
+  }
+
   public async addToken(genre: string, type: string, value: number) {
     var tokens = (this as any).system[type];
 

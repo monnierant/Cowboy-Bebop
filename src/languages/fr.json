@@ -7,6 +7,8 @@
       "normal": "Normal",
       "roll": "Lancer",
       "name": "NOM",
+      "genre": "GENRE",
+      "rang": "MOUVEMENT",
       "concept": "CONCEPT",
       "memory": "SOUVENIR",
       "burden": "FARDEAU",

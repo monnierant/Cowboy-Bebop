@@ -22,13 +22,25 @@
         value="{{ actor.system.concept }}"
       />
     </div>
-    <select class="cowboy-prime-genre">
-      {{#each genres as |genre|}}
-      <option value="{{ genre }}" {{#if (eq genre ../actor.system.genre)}}selected{{/if}}>
-        {{ genre }}
-      </option>
-      {{/each}}
-    </select>
+    <div class="cowboy-prime-header-selects">
+      <label>{{localize 'COWBOY.actor.genre'}}</label>
+      <select class="cowboy-prime-genre">
+        {{#each genres as |genre|}}
+        <option value="{{ genre }}" {{#if (eq genre ../actor.system.genre)}}selected{{/if}}>
+          {{ genre }}
+        </option>
+        {{/each}}
+      </select>
+      <label>{{localize 'COWBOY.actor.rang'}}</label>
+      {{log actor}}
+      <select class="cowboy-prime-mouvement">
+        {{#each rangs as |rang rangIndex|}}
+        <option value="{{ rangIndex }}" {{#if (eq rangIndex ../actor.system.mouvement)}}selected{{/if}}>
+          {{ rang.name }}
+        </option>
+        {{/each}}
+      </select>
+    </div>
     <div class="cowboy-prime-current-target">
       {{#if actor.system.isCurrentTarget}}
       {{localize 'COWBOY.actor.currentTarget'}}
@@ -92,5 +104,4 @@
     </div>
     {{/if}}
   </section>
-
 </form>
