@@ -1,6 +1,36 @@
-import { ModuleData } from "@league-of-foundry-developers/foundry-vtt-types/src/foundry/common/packages.mjs";
-import DogBrowser from "./apps/dogBrowser";
+export interface Trait {
+  name: string;
+  damaged: boolean;
+}
 
-export interface MyModule extends Game.ModuleData<ModuleData> {
-  dogBrowser: DogBrowser;
+export interface Traits {
+  [category: string]: Trait[];
+}
+
+export interface Mouvement {
+  name: string;
+  difficulty: number;
+  dices: number;
+  notes: number;
+}
+
+export interface Cadran {
+  name: string;
+  size: number;
+  genre: string;
+  isImportant: boolean;
+  secretNote: string;
+  mouvement: number;
+  value: number;
+  isObjective: boolean;
+  isVisibleByPlayers: boolean;
+  isClosed: boolean;
+}
+
+export interface Colors {
+  [key: string]: {
+    on: string;
+    off: string;
+    fa: string;
+  };
 }

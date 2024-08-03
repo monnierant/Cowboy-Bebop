@@ -1,0 +1,78 @@
+{
+  "Actor": {
+    "types": ["chasseur", "prime"],
+    "templates": {
+      "common": {
+        "isCurrentTarget": false,
+        "groove": "",
+        "concept": ""
+      }
+    },
+    "chasseur": {
+      "templates": ["common"],
+      "memory": "",
+      "traits": {
+        "rock": [
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
+        ],
+        "blues": [
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
+        ],
+        "jazz": [
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
+        ],
+        "dance": [
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
+        ],
+        "tango": [
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false },
+          { "name": "", "damaged": false, "hyperdamaged": false }
+        ]
+      },
+      "cartridge": 6,
+      "rythme": 0,
+      "burden": [],
+      "ship": {
+        "main": "",
+        "mono": []
+      }
+    },
+    "prime": {
+      "genre": "rock",
+      "notes": {
+        "rock": 0,
+        "blues": 0,
+        "jazz": 0,
+        "dance": 0,
+        "tango": 0
+      },
+      "cartons": {
+        "rock": 0,
+        "blues": 0,
+        "jazz": 0,
+        "dance": 0,
+        "tango": 0
+      },
+      "cadrans": [],
+      "mouvement": 0,
+      "templates": ["common"]
+    }
+  },
+  "Item": {
+    "types": ["mono"],
+    "mono": {
+      "weapon-trait": "",
+      "equipment-trait": "",
+      "health": 1
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<div class="cowboy-health-counter">
+  <div class="cowboy-cylinder">
+    {{#range 1 6 actor}}
+    <div class="cowboy-slot">
+      {{#if (gt index system.cartridge)}}
+      <input type="checkbox" disabled="true" checked id="slot{{ index }}" />
+      {{else}}
+      <input type="checkbox" disabled="true" id="slot{{ index }}" />
+      {{/if}}
+    </div>
+    {{/range}}
+  </div>
+</div>

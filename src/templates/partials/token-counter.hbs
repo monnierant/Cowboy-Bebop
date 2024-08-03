@@ -1,0 +1,19 @@
+<div class="cowboy-actor-tokens">
+  <div class="cowboy-actor-token-label">{{ type }}</div>
+  {{#each tokens as |token tokenId|}}
+  <button
+    class="cowboy-actor-token  cowboy-{{ ../type }}"
+    data-genre="{{ tokenId }}"
+    data-type="{{ ../type }}"
+  >
+    {{ genreToIcon tokenId ../on }}
+    <div class="cowboy-actor-token-value">{{ token }}</div>
+  </button>
+  {{/each}}
+
+  {{#if isGM}}
+  <button class="cowboy-prime-tokens-add" data-value="{{ add }}">
+    {{ add }}
+  </button>
+  {{/if}}
+</div>

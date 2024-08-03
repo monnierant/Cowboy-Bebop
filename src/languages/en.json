@@ -1,4 +1,38 @@
 {
+  "COWBOY": {
+    "actor": {
+      "goal": "Goal",
+      "threat": "Threat",
+      "important": "Important",
+      "normal": "Normal",
+      "roll": "Roll",
+      "name": "NAME",
+      "genre": "GENRE",
+      "rang": "MOUVEMENT",
+      "concept": "CONCEPT",
+      "memory": "MEMORY",
+      "burden": "BURDEN",
+      "currentTarget": "Is current target",
+      "setCurrentTarget": "Set current target",
+      "admin": {
+        "heal": "Heal",
+        "damage": "Damage",
+        "restore": "Restore"
+      }
+    },
+
+    "roll": {
+      "actions": {
+        "collect": "Collect",
+        "cartridge": "Use Cartridge",
+        "traits": "Use Traits"
+      }
+    },
+
+    "weapon-trait": "weapon trait",
+    "equipment-trait": "equipment trait"
+  },
+
   "MYMODULE.dog-browser": "Dog browser",
   "MYMODULE.dogs": "Dogs",
   "MYMODULE.fetch-random-dog": "Fetch random dog photo",

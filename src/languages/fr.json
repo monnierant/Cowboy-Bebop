@@ -1,0 +1,39 @@
+{
+  "COWBOY": {
+    "actor": {
+      "goal": "Objectif",
+      "threat": "Menace",
+      "important": "Important",
+      "normal": "Normal",
+      "roll": "Lancer",
+      "name": "NOM",
+      "genre": "GENRE",
+      "rang": "MOUVEMENT",
+      "concept": "CONCEPT",
+      "memory": "SOUVENIR",
+      "burden": "FARDEAU",
+      "currentTarget": "Cible actuelle",
+      "setCurrentTarget": "Choisir cette Cible",
+      "admin": {
+        "heal": "Soin",
+        "damage": "Dégat",
+        "restore": "Restore"
+      }
+    },
+    "roll": {
+      "actions": {
+        "collect": "Collecter",
+        "cartridge": "Cartouche",
+        "show": "Montrer"
+      }
+    },
+
+    "weapon-trait": "Traits d'armes",
+    "equipment-trait": "Traits d'équipement"
+  },
+
+  "MYMODULE.dog-browser": "Chien browser",
+  "MYMODULE.dogs": "Chiens",
+  "MYMODULE.fetch-random-dog": "Fetch random Chien photo",
+  "MYMODULE.random-dog-alt": "Image of a random Chien"
+}
