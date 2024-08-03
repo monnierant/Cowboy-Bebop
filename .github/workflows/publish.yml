@@ -2,7 +2,7 @@ name: Publish release
 
 on:
   release:
-    types: [published, created, released]
+    types: published
 
 jobs:
   build:
@@ -57,4 +57,4 @@ jobs:
           RELEASE_GITHUB_URL: ${{ github.repositoryUrl }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           RELEASE_AUTH_TOKEN: ${{ secrets.FVTT_PUBLISH_TOKEN }}
-        run: npm run publish-release
+        run: npm run publish
