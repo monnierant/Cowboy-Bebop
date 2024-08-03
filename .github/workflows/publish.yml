@@ -32,7 +32,7 @@ jobs:
 
       - name: Create zip archive
         working-directory: dist
-        run: zip -r ./module.zip system.json template.json scripts/ templates/ languages/
+        run: zip -r ./system.zip system.json template.json scripts/ templates/ languages/
 
       - name: Troubleshoot
         run: ls -la dist
@@ -46,6 +46,6 @@ jobs:
           draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "./dist/system.json, ./dist/module.zip"
+          artifacts: "./dist/system.json, ./dist/system.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
