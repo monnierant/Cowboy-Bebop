@@ -51,3 +51,10 @@ jobs:
           artifacts: "./dist/system.json, ./dist/system.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
+
+      - name: Publish release
+        env:
+          RELEASE_GITHUB_URL: ${{ github.repositoryUrl }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.version-without-v }}
+          RELEASE_AUTH_TOKEN: ${{ secrets.FVTT_PUBLISH_TOKEN }}
+        run: npm run publish-release
