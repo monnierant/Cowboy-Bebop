@@ -54,7 +54,7 @@ jobs:
 
       - name: Publish release
         env:
-          RELEASE_GITHUB_URL: ${{ github.repositoryUrl }}
+          RELEASE_GITHUB_URL: "${{ github.server_url }}/${{ github.repository }}"
           RELEASE_VERSION: ${{ steps.get_version.outputs.version-without-v }}
           RELEASE_AUTH_TOKEN: ${{ secrets.FVTT_PUBLISH_TOKEN }}
         run: npm install -g ts-node && npm run publish
