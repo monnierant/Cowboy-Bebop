@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc && vite build",
     "watch": "tsc && vite build --watch",
-    "publish": "node publish.js"
+    "publish": "node publish.cjs"
   },
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
