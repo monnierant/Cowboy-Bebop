@@ -2,10 +2,12 @@ name: Publish release
 
 on:
   release:
-    types: [published]
+    types: published
 
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,7 +34,10 @@ jobs:
 
       - name: Create zip archive
         working-directory: dist
-        run: zip -r ./module.zip module.json style.css scripts/ templates/ languages/
+        run: zip -r ./system.zip system.json template.json scripts/ templates/ languages/
+
+      - name: Troubleshoot
+        run: ls -la dist
 
       - name: Update release with files
         id: create_version_release
@@ -43,6 +48,13 @@ jobs:
           draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "./dist/module.json, ./dist/module.zip"
+          artifacts: "./dist/system.json, ./dist/system.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
+
+      - name: Publish release
+        env:
+          RELEASE_GITHUB_URL: "${{ github.server_url }}/${{ github.repository }}"
+          RELEASE_VERSION: ${{ steps.get_version.outputs.version-without-v }}
+          RELEASE_AUTH_TOKEN: ${{ secrets.FVTT_PUBLISH_TOKEN }}
+        run: npm install -g ts-node && npm run publish
