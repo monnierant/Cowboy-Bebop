@@ -391,6 +391,14 @@ export default class CowboyBebopActor extends Actor {
     });
   }
 
+  public async renameCadran(index: number, name: string) {
+    const cadrans = (this as any).system.cadrans;
+    cadrans[index].name = name;
+    await this.update({
+      "system.cadrans": cadrans,
+    });
+  }
+
   public async setGenre(genre: string) {
     await this.update({
       "system.genre": genre,
