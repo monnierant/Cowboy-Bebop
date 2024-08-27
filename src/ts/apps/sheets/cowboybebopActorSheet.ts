@@ -74,6 +74,9 @@ export default class CowboyBebopItemSheet extends ActorSheet {
       .find(".cowboy-cadran-visible")
       .on("click", this._onCadranVisible.bind(this));
     html
+      .find(".cowboy-cadran-name")
+      .on("change", this._onCadranRename.bind(this));
+    html
       .find(".cowboy-prime-genre")
       .on("change", this._onSelectGenre.bind(this));
     html
@@ -272,7 +275,7 @@ export default class CowboyBebopItemSheet extends ActorSheet {
     }
   }
 
-  private _onCadranVisible(event: Event) {
+  private async _onCadranVisible(event: Event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -280,7 +283,19 @@ export default class CowboyBebopItemSheet extends ActorSheet {
       (event.currentTarget as HTMLElement).dataset.index ?? "0"
     );
 
-    (this.actor as CowboyBebopActor).toggleCadranVisibility(cadranIndex);
+    await (this.actor as CowboyBebopActor).toggleCadranVisibility(cadranIndex);
+  }
+
+  private async _onCadranRename(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const name = (event.currentTarget as HTMLInputElement).value;
+    const index = parseInt(
+      (event.currentTarget as HTMLElement).dataset.index ?? "0"
+    );
+
+    await (this.actor as CowboyBebopActor).renameCadran(index, name ?? "");
   }
 
   private async _onSelectGenre(event: Event) {
